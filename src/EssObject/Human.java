@@ -1,6 +1,6 @@
 package EssObject;
 
-public abstract class Human implements Comparable<Object>{
+public abstract class Human<T> implements Comparable<T>{
 	protected String name;
 	protected String gender;
 	protected int age;
