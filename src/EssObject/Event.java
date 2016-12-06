@@ -1,5 +1,9 @@
 package EssObject;
-
+/**
+ * 
+ * @author 普皓群
+ *
+ */
 public class Event implements Comparable<Event>{
 	Time time;
 	Site site;
@@ -23,11 +27,11 @@ public class Event implements Comparable<Event>{
 	public boolean equals(Object o){
 		if(this.getClass() != o.getClass())return false;
 		Event event = (Event)o;
-		if(this.time.year != event.time.year)return false;
-		else if(this.time.month != event.time.month)return false;
-		else if(this.time.day != event.time.day)return false;
-		else if(this.time.hour != event.time.hour)return false;
-		else if(this.time.minute != event.time.minute)return false;
+		if(this.time.getYear() != event.time.getYear())return false;
+		else if(this.time.getMonth() != event.time.getMonth())return false;
+		else if(this.time.getDay() != event.time.getDay())return false;
+		else if(this.time.getHour() != event.time.getHour())return false;
+		else if(this.time.getMinute() != event.time.getMinute())return false;
 		else if(this.site.equals(site) )return false;
 		else if(this.teamA.equals(teamA))return false;
 		else if(this.teamB.equals(teamB))return false;
@@ -36,22 +40,22 @@ public class Event implements Comparable<Event>{
 	
 	@Override
 	public int compareTo(Event o) {
-		if(this.time.year != o.time.year)
-			return this.time.year - o.time.year;
-		else if(this.time.month != o.time.month)
-			return this.time.month - o.time.month;
-		else if(this.time.day != o.time.day)
-			return this.time.day - o.time.day;
-		else if(this.time.hour != o.time.hour)
-			return this.time.hour - o.time.hour;
+		if(this.time.getYear() != o.time.getYear())
+			return this.time.getYear() - o.time.getYear();
+		else if(this.time.getMonth() != o.time.getMonth())
+			return this.time.getMonth() - o.time.getMonth();
+		else if(this.time.getDay() != o.time.getDay())
+			return this.time.getDay() - o.time.getDay();
+		else if(this.time.getHour() != o.time.getHour())
+			return this.time.getHour() - o.time.getHour();
 		else
-			return this.time.minute - o.time.minute;
+			return this.time.getMinute() - o.time.getMinute();
 	}
 	
 	@Override
 	public String toString(){
 		return String.format("%d/%d/%d %02d:%02d %s vs %s"
-				, time.year, time.month, time.day, time.hour, time.minute
+				, time.getYear(), time.getMonth(), time.getDay(), time.getHour(), time.getMinute()
 				,teamA ,teamB);
 	}
 }

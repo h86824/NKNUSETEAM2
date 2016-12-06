@@ -12,7 +12,11 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+/**
+ * 
+ * @author 普皓群
+ *
+ */
 public class DeviceIO implements ObjectIO<Device>{
 	private String filePath = "DeviceList.txt";
 	

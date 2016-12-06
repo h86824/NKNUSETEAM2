@@ -1,7 +1,7 @@
 package EssObject;
 
 public class Team {
-	private String name;
+	private String name;					
 	private Athlete[] athleteArray;
 	private Coach[] coachArray;
 	
@@ -37,9 +37,12 @@ public class Team {
 	
 	@Override
 	public boolean equals(Object o){
-		if(this.getClass() != o.getClass())return false;
-		Team event = (Team)o;
-		return false;
+		if(this.getClass() != o.getClass())
+			return false;
+		Team team = (Team)o;
+		if(this.name != team.name)
+			return false;
+		return true;
 	}
 	
 	@Override
