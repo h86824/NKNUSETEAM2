@@ -1,6 +1,6 @@
 package EssObject;
 
-public class Coach extends Human{
+public class Coach extends Human<Coach>{
 	private String country;
     public Coach(String name, String gender, int age, String profession,String country) {
         super(name, gender, age, profession);
@@ -16,9 +16,20 @@ public class Coach extends Human{
    
     
 	@Override
-	public int compareTo(Object arg0) {
+	public int compareTo(Coach o) {
 		// TODO Auto-generated method stub
-		return 0;
+		if(!this.name.equals(o.name)){
+			return name.compareTo(o.name);
+		}
+		if(this.age != o.age){
+			return this.age - o.age;
+		}
+		if(!this.country.equals(o.country)){
+			return country.compareTo(o.country);
+		}
+		else {
+			return this.profession.compareTo(o.profession);
+		}
 	}
 
 	@Override
