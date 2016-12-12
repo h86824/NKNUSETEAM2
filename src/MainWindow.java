@@ -1,6 +1,6 @@
 
 import java.util.ArrayList;
-
+import EssGUI.*;
 import EssIO.*;
 import EssObject.*;
 import EssProcess.*;
@@ -19,20 +19,8 @@ public class MainWindow {
 		for(Device i :device){
 			System.out.println(i);
 		}*/
+		MainFrame MF = new MainFrame();
 		
-		Team[] team = new Team[10];
-		Time[] time = new Time[5];
-		for(int i = 0 ; i < 10 ; i++)
-			team[i] = new Team(String.format("team %d" ,i + 1), null, null);
-		for(int i = 0 ; i < 5 ; i++)
-			time[i] = new Time(2016, 12, 5, 10, i*10);
-		
-		RandomScheduleBuilder RSB = new RandomScheduleBuilder(team, time);
-		EventSchedule ES = RSB.getSchedule();
-		
-		for(Event i : ES.getEvents()){
-			System.out.println(i);
-		}
 		System.out.println("finish");
 	}
 

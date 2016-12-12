@@ -20,6 +20,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		setRandomScheduleBuilder();
 		replanSchedule();
 		mainFrame = new JFrame();
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setSize(400,1000);
 		mainFrame.setBounds(10, 10,600, 400);
 		setMainPanel();

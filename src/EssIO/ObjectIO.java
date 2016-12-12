@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * @param <T>
  */
 public interface ObjectIO<T>{
+	public final String PATH = "";
 	public ArrayList<T> read();
 	public void write(ArrayList<T> inputList);
 }
