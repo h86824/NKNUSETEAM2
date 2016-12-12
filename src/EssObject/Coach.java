@@ -27,17 +27,20 @@ public class Coach extends Human{
 		if(this.getClass() != o.getClass()){
 			return false;
 		}
-		Athlete athlete = (Athlete) o;
-		if(athlete.getName() != this.name){
+		Coach coach = (Coach) o;
+		if(coach.getName() != this.name){
 			return false;
 		}
-		if(athlete.getGender() != this.gender){
+		if(coach.getGender() != this.gender){
 			return false;
 		}
-		if(athlete.getAge() != this.age){
+		if(coach.getAge() != this.age){
 			return false;
 		}
-		if(athlete.getProfession() != this.getProfession()){
+		if(coach.getProfession() != this.getProfession()){
+			return false;
+		}
+		if(coach.getCountry()!= this.getCountry()){
 			return false;
 		}
 		
