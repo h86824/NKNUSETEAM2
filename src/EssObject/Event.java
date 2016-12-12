@@ -5,22 +5,38 @@ package EssObject;
  *
  */
 public class Event implements Comparable<Event>{
-	Time time;
-	Site site;
-	Team teamA;
-	Team teamB;
-	Event(int year, int month, int day, int hour,int minute, Site site, Team teamA ,Team teamB){
+	private Time time;
+	private String site;
+	private String teamA;
+	private String teamB;
+	public Event(int year, int month, int day, int hour,int minute, String site, String teamA ,String teamB){
 		time = new Time(year , month , day , hour , minute);
 		this.site = site;
 		this.teamA = teamA;
 		this.teamB = teamB;
 	}
 	
-	Event(Time time, Site site, Team teamA ,Team teamB){
+	public Event(Time time, String site, String teamA, String teamB){
 		this.time = time;
 		this.site = site;
 		this.teamA = teamA;
 		this.teamB = teamB;
+	}
+	
+	public Time getTime(){
+		return time;
+	}
+	
+	public String getSite(){
+		return site;
+	}
+	
+	public String getTeamA(){
+		return teamA;
+	}
+	
+	public String getTeamB(){
+		return teamB;
 	}
 	
 	@Override

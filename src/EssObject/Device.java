@@ -1,6 +1,6 @@
 package EssObject;
 
-public class Device {
+public class Device implements Comparable<Device>{
 	private String deviceName;
 	private int deviceAmount;
 	
@@ -44,5 +44,10 @@ public class Device {
 		Device device = (Device)o;
 		if(device.deviceName != this.deviceName)return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(Device o) {
+		return this.deviceName.compareTo(o.deviceName);
 	}
 }

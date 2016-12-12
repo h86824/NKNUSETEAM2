@@ -12,13 +12,14 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 import java.util.TreeSet;
-import EssObject.Athlete;
 
-public class AthleteIO implements ObjectIO<Athlete>{
+import EssObject.Team;
+
+public class TeamIO implements ObjectIO<Team>{
 	private String filePath = ObjectIO.PATH;
 	
-	public AthleteIO(String country , String team){
-		filePath += "country/" + country + "_" + team + "_Athlete.txt";
+	public TeamIO(String countryName){
+		filePath += "country/" + countryName + "_team.txt";
 		/*try {
 			filePath = new String(filePath.getBytes("UTF-8"),"BIG5");
 		} catch (UnsupportedEncodingException e) {
@@ -27,7 +28,7 @@ public class AthleteIO implements ObjectIO<Athlete>{
 	}
 	
 	@Override
-	public TreeSet<Athlete> read() {
+	public TreeSet<Team> read() {
 		BufferedReader input = null;
 		try {
 			File f = new File(filePath);
@@ -38,24 +39,17 @@ public class AthleteIO implements ObjectIO<Athlete>{
 		}
 		
 		Scanner inputFile = new Scanner(input);
-		TreeSet<Athlete> returnSet = new TreeSet<Athlete>();
+		TreeSet<Team> returnSet = new TreeSet<Team>();
 		while(inputFile.hasNext()){
 			String name = inputFile.next().split("=")[1];
-			String gender = inputFile.next().split("=")[1];
-			int age = Integer.parseInt(inputFile.next().split("=")[1]);
-			String profession = inputFile.next().split("=")[1];
-			int height = Integer.parseInt(inputFile.next().split("=")[1]);
-			int weight = Integer.parseInt(inputFile.next().split("=")[1]);
-			String country = inputFile.next().split("=")[1];
-			returnSet.add(new Athlete(name, gender, age, profession
-					, height, weight, country, null, null));
+			returnSet.add(new Team(name , null, null));
 		}
 		inputFile.close();
 		return returnSet;
 	}
 
 	@Override
-	public void write(TreeSet<Athlete> inputSet) {
+	public void write(TreeSet<Team> inputSet) {
 		BufferedWriter out = null;
 		try {
 			out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath) ,"UTF-8"));
@@ -64,14 +58,8 @@ public class AthleteIO implements ObjectIO<Athlete>{
 			e.printStackTrace();
 		}
 		try {
-			for(Athlete i: inputSet){
+			for(Team i: inputSet){
 				out.write("name="+i.getName()+"\r\n");
-				out.write("gender="+i.getGender()+"\r\n");
-				out.write("age="+i.getAge()+"\r\n");
-				out.write("getProfession="+i.getProfession()+"\r\n");
-				out.write("height="+i.getHeight()+"\r\n");
-				out.write("weight="+i.getWeight()+"\r\n");
-				out.write("country="+i.getCountry()+"\r\n\r\n");
 			}
 			out.flush();
 			out.close();
@@ -80,5 +68,5 @@ public class AthleteIO implements ObjectIO<Athlete>{
 			e.printStackTrace();
 		}
 	}
-	
+
 }

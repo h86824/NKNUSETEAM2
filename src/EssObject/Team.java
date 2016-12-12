@@ -1,11 +1,13 @@
 package EssObject;
 
-public class Team {
-	private String name;					
-	private Athlete[] athleteArray;
-	private Coach[] coachArray;
+import java.util.TreeSet;
+
+public class Team implements Comparable<Team>{
+	private String name;
+	private TreeSet<Athlete> athleteArray;
+	private TreeSet<Coach> coachArray;
 	
-	public Team(String name, Athlete[] athleteArray, Coach[] coachArray){
+	public Team(String name, TreeSet<Athlete> athleteArray, TreeSet<Coach> coachArray){
 		this.name = name;
 		this.athleteArray = athleteArray;
 		this.coachArray = coachArray;
@@ -19,19 +21,19 @@ public class Team {
 		return name;
 	}
 	
-	public void setAthlete(Athlete[] athleteArray){
+	public void setAthlete(TreeSet<Athlete> athleteArray){
 		this.athleteArray = athleteArray;
 	}
 	
-	public Athlete[] getAthlete(){
+	public TreeSet<Athlete> getAthlete(){
 		return athleteArray;
 	}
 	
-	public void setCoach(Coach[] coachArray){
+	public void setCoach(TreeSet<Coach> coachArray){
 		this.coachArray = coachArray;
 	}
 	
-	public Coach[] getCoach(){
+	public TreeSet<Coach> getCoach(){
 		return coachArray;
 	}
 	
@@ -48,5 +50,10 @@ public class Team {
 	@Override
 	public String toString(){
 		return "" + name;
+	}
+
+	@Override
+	public int compareTo(Team o) {
+		return this.name.compareTo(o.name);
 	}
 }

@@ -76,7 +76,7 @@ public class Athlete extends Human<Athlete>{
 
 	@Override
 	public String toString() {
-		return country +" " + name;
+		return country + " " + profession +" " + name;
 	}
 
 

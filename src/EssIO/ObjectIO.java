@@ -1,6 +1,6 @@
 package EssIO;
 
-import java.util.ArrayList;
+import java.util.TreeSet;
 /**
  * 
  * @author 普皓群
@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * @param <T>
  */
 public interface ObjectIO<T>{
-	public final String PATH = "";
-	public ArrayList<T> read();
-	public void write(ArrayList<T> inputList);
+	public final String PATH = "save/";
+	public TreeSet<T> read();
+	public void write(TreeSet<T> inputList);
 }
