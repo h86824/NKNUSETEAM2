@@ -61,10 +61,10 @@ public class RaceRecord implements Comparable<RaceRecord>{
 		else if(!this.site.equals(raceRecord.site) ){
 			return false;
 		}
-		else if(this.teamA.equals(raceRecord.teamA)&&this.teamB.equals(raceRecord.teamB)){
+		else if(this.teamA.equals(teamA)&&this.teamB.equals(teamB)){
 			return false;
 		}
-		else if(this.teamA.equals(raceRecord.teamB)&&this.teamB.equals(raceRecord.teamA)){
+		else if(this.teamA.equals(teamB)&&this.teamB.equals(teamA)){
 			return false;
 		}
 		else return true;
