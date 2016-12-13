@@ -10,5 +10,5 @@ import java.util.TreeSet;
 public interface ObjectIO<T>{
 	public final String PATH = "save/";
 	public TreeSet<T> read();
-	public void write(TreeSet<T> inputList);
+	public void write(TreeSet<T> inputSet);
 }

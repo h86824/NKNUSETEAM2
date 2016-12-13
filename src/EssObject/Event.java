@@ -48,9 +48,9 @@ public class Event implements Comparable<Event>{
 		else if(this.time.getDay() != event.time.getDay())return false;
 		else if(this.time.getHour() != event.time.getHour())return false;
 		else if(this.time.getMinute() != event.time.getMinute())return false;
-		else if(this.site.equals(site) )return false;
-		else if(this.teamA.equals(teamA))return false;
-		else if(this.teamB.equals(teamB))return false;
+		else if(!this.site.equals(site) )return false;
+		else if(!this.teamA.equals(teamA))return false;
+		else if(!this.teamB.equals(teamB))return false;
 		else return true;
 	}
 	
