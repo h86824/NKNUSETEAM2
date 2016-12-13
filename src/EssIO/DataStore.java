@@ -29,4 +29,12 @@ public class DataStore {
 			}
 		}
 	}
+	
+	private void readCoach(){
+		for(Country country: countrySet){
+			for(Team team : country.getTeam()){
+				
+			}
+		}
+	}
 }

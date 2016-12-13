@@ -91,10 +91,10 @@ public class MainFrame extends JFrame implements ActionListener{
 	}
 	
 	private void setRandomScheduleBuilder(){
-		Team[] team = new Team[10];
+		String[] team = new String[10];
 		Time[] time = new Time[5];
 		for(int i = 0 ; i < 10 ; i++)
-			team[i] = new Team(String.format("team%d" ,i + 1), null, null);
+			team[i] = new String(String.format("team%d" ,i + 1));
 		for(int i = 0 ; i < 5 ; i++)
 			time[i] = new Time(2016, 12, 5, 10, i*10);
 		RSB = new RandomScheduleBuilder(team, time);

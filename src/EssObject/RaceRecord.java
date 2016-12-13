@@ -43,13 +43,30 @@ public class RaceRecord implements Comparable<RaceRecord>{
 	public boolean equals(Object o){
 		if(this.getClass() != o.getClass())return false;
 		RaceRecord raceRecord = (RaceRecord)o;
-		if(this.time.getYear() != raceRecord.time.getYear())return false;
-		else if(this.time.getMonth() != raceRecord.time.getMonth())return false;
-		else if(this.time.getDay() != raceRecord.time.getDay())return false;
-		else if(this.time.getHour() != raceRecord.time.getHour())return false;
-		else if(this.time.getMinute() != raceRecord.time.getMinute())return false;
-		else if(!this.site.equals(site) )return false;
-		else if
+		if(this.time.getYear() != raceRecord.time.getYear()){
+			return false;
+		}
+		else if(this.time.getMonth() != raceRecord.time.getMonth()){
+			return false;
+		}
+		else if(this.time.getDay() != raceRecord.time.getDay()){
+			return false;
+		}
+		else if(this.time.getHour() != raceRecord.time.getHour()){
+			return false;
+		}
+		else if(this.time.getMinute() != raceRecord.time.getMinute()){
+			return false;
+		}
+		else if(!this.site.equals(raceRecord.site) ){
+			return false;
+		}
+		else if(this.teamA.equals(teamA)&&this.teamB.equals(teamB)){
+			return false;
+		}
+		else if(this.teamA.equals(teamB)&&this.teamB.equals(teamA)){
+			return false;
+		}
 		else return true;
 	}
 	@Override
