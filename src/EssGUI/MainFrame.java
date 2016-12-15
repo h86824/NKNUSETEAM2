@@ -8,6 +8,7 @@ import java.util.TreeSet;
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 
+import EssIO.DataStore;
 import EssObject.*;
 import EssObject.Event;
 import EssProcess.RandomScheduleBuilder;
@@ -17,7 +18,7 @@ public class MainFrame extends JFrame implements ActionListener{
 	JPanel mainPanel = new JPanel();
 	JPanel openPanel = new JPanel();
 	EventSchedule ES;
-	
+	DataStore dataStore = new DataStore();
 	public MainFrame(){	
 		setRandomScheduleBuilder();
 		replanSchedule();
@@ -47,7 +48,7 @@ public class MainFrame extends JFrame implements ActionListener{
 	
 	private void setOpenPanelShowSchedule() {
 		openPanel.removeAll();
-		TreeSet<Event> ESSet = ES.getEvents();
+		TreeSet<Event> ESSet = dataStore.getEventSchedule().getEvents();
 		JPanel panel = new JPanel(new GridLayout(ESSet.size(),6));
 		for(Event i : ESSet){
 			String [] tempString = i.toString().split(" ");
@@ -93,18 +94,23 @@ public class MainFrame extends JFrame implements ActionListener{
 	}
 	
 	private void setRandomScheduleBuilder(){
-		String[] team = new String[10];
-		Time[] time = new Time[5];
-		for(int i = 0 ; i < 10 ; i++)
-			team[i] = new String(String.format("team%d" ,i + 1));
-		for(int i = 0 ; i < 5 ; i++)
-			time[i] = new Time(2016, 12, 5, 10, i*10);
-		RSB = new RandomScheduleBuilder(team, time);
+		TreeSet<String> teamSet = new TreeSet<String>();
+		TreeSet<Time> timeSet = new TreeSet<Time>();
+		for(Country i:dataStore.getCountry()){
+			for(Team j : i.getTeam()){
+				if(j.getName().equals("籃球"))
+					teamSet.add(i.getName());
+			}
+		}
+		timeSet.add(new Time(2016, 12, 15, 12, 00));
+		timeSet.add(new Time(2016, 12, 15, 12, 30));
+		timeSet.add(new Time(2016, 12, 15, 13, 00));
+		RSB = new RandomScheduleBuilder(teamSet, timeSet);
 	}
 	
 	private void replanSchedule(){
-		ES = RSB.getSchedule();
-		for(Event i : ES.getEvents()){
+		dataStore.setEvnetSchedule(RSB.getSchedule());
+		for(Event i : dataStore.getEventSchedule().getEvents()){
 			System.out.println(i);
 		}
 	}

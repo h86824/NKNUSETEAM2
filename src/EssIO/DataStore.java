@@ -14,6 +14,18 @@ public class DataStore {
 		readEventSchedule();
 	}
 	
+	public EventSchedule getEventSchedule(){
+		return eventSchedule;
+	}
+	
+	public void setEvnetSchedule(EventSchedule eventSchedule){
+		this.eventSchedule = eventSchedule;
+	}
+	
+	public TreeSet<Country> getCountry(){
+		return countrySet;
+	}
+	
 	private void readCountry(){
 		countrySet = new CountryIO().read();
 	}

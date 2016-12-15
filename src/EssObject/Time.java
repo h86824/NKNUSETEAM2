@@ -1,6 +1,6 @@
 package EssObject;
 
-public class Time {
+public class Time implements Comparable<Time>{
 	private int year;
 	private int month;
 	private int day;
@@ -57,5 +57,14 @@ public class Time {
 	@Override
 	public String toString(){
 		return String.format("%d/%d/%d %02d%02d", year, month, day, hour, minute);
+	}
+
+	@Override
+	public int compareTo(Time o) {
+		if(this.year != o.year)return this.year - o.year;
+		if(this.month != o.month)return this.month - o.month;
+		if(this.day != o.day)return this.day - o.day;
+		if(this.hour != o.hour)return this.hour - o.hour;
+		return this.minute - o.minute;
 	}
 }
