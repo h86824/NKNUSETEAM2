@@ -7,19 +7,19 @@ import EssObject.Team;
 import EssObject.Time;
 
 public class RandomScheduleBuilder {
-	Team[] team;
+	String[] team;
 	Time[] time;
-	public RandomScheduleBuilder(Team[] team, Time[] time){
+	public RandomScheduleBuilder(String[] team, Time[] time){
 		this.team = team;
 		this.time = time;
 	}
 	
 	public EventSchedule getSchedule(){
 		EventSchedule returnES = new EventSchedule();
-		ArrayList<Team> teamList = new ArrayList<Team>();
+		ArrayList<String> teamList = new ArrayList<String>();
 		ArrayList<Time> timeList = new ArrayList<Time>();
 		
-		for(Team i : team)
+		for(String i : team)
 			teamList.add(i);
 		for(Time i : time)
 			timeList.add(i);
@@ -29,10 +29,10 @@ public class RandomScheduleBuilder {
 			Time nowTime = timeList.get(tempNum);
 			timeList.remove(tempNum);
 			tempNum = ranNumber.nextInt(teamList.size());
-			Team teamA = teamList.get(tempNum);
+			String teamA = teamList.get(tempNum);
 			teamList.remove(tempNum);
 			tempNum = ranNumber.nextInt(teamList.size());
-			Team teamB = teamList.get(tempNum);
+			String teamB = teamList.get(tempNum);
 			teamList.remove(tempNum);
 			returnES.addEvent(nowTime, null, teamA, teamB);
 		}

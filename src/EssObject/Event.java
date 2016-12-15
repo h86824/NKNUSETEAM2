@@ -5,22 +5,33 @@ package EssObject;
  *
  */
 public class Event implements Comparable<Event>{
+	private String name;
 	private Time time;
 	private String site;
 	private String teamA;
 	private String teamB;
-	public Event(int year, int month, int day, int hour,int minute, String site, String teamA ,String teamB){
+	public Event(String name ,int year, int month, int day, int hour,int minute, String site, String teamA ,String teamB){
 		time = new Time(year , month , day , hour , minute);
+		this.name = name;
 		this.site = site;
 		this.teamA = teamA;
 		this.teamB = teamB;
 	}
 	
-	public Event(Time time, String site, String teamA, String teamB){
+	public Event(String name ,Time time, String site, String teamA, String teamB){
+		this.name = name;
 		this.time = time;
 		this.site = site;
 		this.teamA = teamA;
 		this.teamB = teamB;
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public void setName(String name){
+		this.name = name;
 	}
 	
 	public Time getTime(){
@@ -48,9 +59,11 @@ public class Event implements Comparable<Event>{
 		else if(this.time.getDay() != event.time.getDay())return false;
 		else if(this.time.getHour() != event.time.getHour())return false;
 		else if(this.time.getMinute() != event.time.getMinute())return false;
-		else if(!this.site.equals(site) )return false;
-		else if(!this.teamA.equals(teamA))return false;
-		else if(!this.teamB.equals(teamB))return false;
+		else if(!this.site.equals(event.site) )return false;
+		else if(!this.teamA.equals(event.teamA))return false;
+		else if(!this.teamA.equals(event.teamB))return false;
+		else if(!this.teamB.equals(event.teamB))return false;
+		else if(!this.teamB.equals(event.teamA))return false;
 		else return true;
 	}
 	

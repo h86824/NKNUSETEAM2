@@ -5,11 +5,13 @@ import EssObject.*;
 
 public class DataStore {
 	public TreeSet<Country> countrySet;
+	public EventSchedule eventSchedule;
 	
 	public DataStore(){
 		readCountry();
 		readTeam();
 		readAthlete();
+		readEventSchedule();
 	}
 	
 	private void readCountry(){
@@ -36,5 +38,9 @@ public class DataStore {
 				
 			}
 		}
+	}
+	
+	private void readEventSchedule(){
+		eventSchedule = new EventScheduleIO().read();
 	}
 }

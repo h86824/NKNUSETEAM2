@@ -17,8 +17,8 @@ import EssObject.EventSchedule;
 
 public class EventScheduleIO{
 	private String filePath = ObjectIO.PATH;
-	public EventScheduleIO(String ScheduleName){
-		filePath += "eventSchedule/" + ScheduleName+".txt";
+	public EventScheduleIO(){
+		filePath += "eventSchedule/eventSchedule.txt";
 	}
 	
 	public EventSchedule read() {
@@ -37,6 +37,7 @@ public class EventScheduleIO{
 			returnSet.setName(name);
 		}
 		while(inputFile.hasNext()){
+			String name = inputFile.next().split("=")[0];
 			int year = Integer.parseInt(inputFile.next().split("=")[1]);
 			int month = Integer.parseInt(inputFile.next().split("=")[1]);
 			int day = Integer.parseInt(inputFile.next().split("=")[1]);
@@ -45,7 +46,7 @@ public class EventScheduleIO{
 			String site = inputFile.next().split("=")[1];
 			String teamA = inputFile.next().split("=")[1];
 			String teamB = inputFile.next().split("=")[1];
-			returnSet.addEvent(year, month, day, hour, minute, site, teamA, teamB);
+			returnSet.addEvent(name, year, month, day, hour, minute, site, teamA, teamB);
 		}
 		inputFile.close();
 		return returnSet;
@@ -62,6 +63,7 @@ public class EventScheduleIO{
 		try {
 			out.write("name="+inputSet.getName()+"\r\n");
 			for(Event i: inputSet.getEvents()){
+				out.write("name="+i.getName()+"\r\n");
 				out.write("year="+i.getTime().getYear()+"\r\n");
 				out.write("month="+i.getTime().getMonth()+"\r\n");
 				out.write("day="+i.getTime().getDay()+"\r\n");

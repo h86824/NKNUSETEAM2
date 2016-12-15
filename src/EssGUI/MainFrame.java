@@ -3,14 +3,16 @@ package EssGUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Enumeration;
 import java.util.TreeSet;
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+
 import EssObject.*;
 import EssObject.Event;
 import EssProcess.RandomScheduleBuilder;
 
 public class MainFrame extends JFrame implements ActionListener{
-	private JFrame mainFrame;
 	RandomScheduleBuilder RSB;
 	JPanel mainPanel = new JPanel();
 	JPanel openPanel = new JPanel();
@@ -19,14 +21,14 @@ public class MainFrame extends JFrame implements ActionListener{
 	public MainFrame(){	
 		setRandomScheduleBuilder();
 		replanSchedule();
-		mainFrame = new JFrame();
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainFrame.setSize(400,1000);
-		mainFrame.setBounds(10, 10,600, 400);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setUIFont(new FontUIResource("新細明體",Font.CENTER_BASELINE,28));
+		this.setSize(1920,1080);
+		this.setBounds(10, 10,1920, 1080);
 		setMainPanel();
-		mainFrame.getContentPane().add(openPanel, BorderLayout.CENTER);
-		mainFrame.getContentPane().add(mainPanel, BorderLayout.WEST);
-		mainFrame.setVisible(true);
+		this.getContentPane().add(openPanel, BorderLayout.CENTER);
+		this.getContentPane().add(mainPanel, BorderLayout.WEST);
+		this.setVisible(true);
 	}
 	
 	private void setMainPanel(){
@@ -105,5 +107,16 @@ public class MainFrame extends JFrame implements ActionListener{
 		for(Event i : ES.getEvents()){
 			System.out.println(i);
 		}
+	}
+	
+	 public void setUIFont (FontUIResource fui){
+		 Enumeration keys=UIManager.getDefaults().keys();
+		 while (keys.hasMoreElements()) {
+			 Object key=keys.nextElement();
+			 Object value=UIManager.get(key);
+			 if (value != null && value instanceof FontUIResource) {
+				 UIManager.put(key, fui);
+			 }
+		 } 
 	}
 }
