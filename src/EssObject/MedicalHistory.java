@@ -11,6 +11,9 @@ public class MedicalHistory {
 	public MedicalHistory(String name){
 		this.name = name;
 	}
+	public  String getName(){
+		return name;
+	}
 	public void addMedicalHistory(String medical){
 		medicalHistory.add(medical);
 	}
