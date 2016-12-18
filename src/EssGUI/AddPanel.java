@@ -5,10 +5,13 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -19,10 +22,13 @@ import EssObject.Athlete;
 import EssObject.Country;
 import EssObject.Team;
 
-public class AddPanel extends JPanel{
+public class AddPanel extends JPanel implements ActionListener{
 	DataStore dataStore;
 	GridBagConstraints gridBagConstraints = new GridBagConstraints();
 	GridBagLayout gridBagLayout = new GridBagLayout();
+	JList<String> countryJList;
+	JList<String> teamJList;
+	JList<String> athleteJList;
 	
 	public AddPanel(DataStore dataStore){
 		this.dataStore = dataStore;
@@ -59,8 +65,10 @@ public class AddPanel extends JPanel{
 		gridBagConstraints.gridwidth = 1;
 		JButton addCountryButton = new JButton("+國家");
 		JButton subCountryButton = new JButton("-國家");
+		addCountryButton.addActionListener(this);
 		this.add(addCountryButton);
 		gridBagLayout.setConstraints(addCountryButton, gridBagConstraints);
+		subCountryButton.addActionListener(this);
 		this.add(subCountryButton);
 		gridBagLayout.setConstraints(subCountryButton, gridBagConstraints);
 		
@@ -75,8 +83,10 @@ public class AddPanel extends JPanel{
 		gridBagConstraints.gridwidth = 1;
 		JButton addTeamButton = new JButton("+球隊");
 		JButton subTeamButton = new JButton("-球隊");
+		addTeamButton.addActionListener(this);
 		this.add(addTeamButton);
 		gridBagLayout.setConstraints(addTeamButton, gridBagConstraints);
+		subTeamButton.addActionListener(this);
 		this.add(subTeamButton);
 		gridBagLayout.setConstraints(subTeamButton, gridBagConstraints);
 		
@@ -91,9 +101,11 @@ public class AddPanel extends JPanel{
 		gridBagConstraints.gridwidth = 3;
 		JButton addAthleteButton = new JButton("+選手");
 		JButton subAthleteButton = new JButton("-選手");
+		addAthleteButton.addActionListener(this);
 		this.add(addAthleteButton);
 		gridBagLayout.setConstraints(addAthleteButton, gridBagConstraints);
 		gridBagConstraints.gridwidth = 0;
+		subAthleteButton.addActionListener(this);
 		this.add(subAthleteButton);
 		gridBagLayout.setConstraints(subAthleteButton, gridBagConstraints);
 		
@@ -106,19 +118,22 @@ public class AddPanel extends JPanel{
 		gridBagConstraints.weighty = 1;
 		gridBagConstraints.fill = GridBagConstraints.BOTH;
 		
-		JList<String> countryJList = new JList<String>(countryList);
+		/*國家清單*/
+		countryJList = new JList<String>(countryList);
 		countryJList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		countryJList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		this.add(countryJList);
 		gridBagLayout.setConstraints(countryJList, gridBagConstraints);
 		
-		JList<String> teamJList = new JList<String>();
+		/*隊伍清單*/
+		teamJList = new JList<String>();
 		teamJList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		teamJList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		this.add(teamJList);
 		gridBagLayout.setConstraints(teamJList, gridBagConstraints);
 		
-		JList<String> athleteJList = new JList<String>();
+		/*選手清單*/
+		athleteJList = new JList<String>();
 		athleteJList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		athleteJList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		this.add(athleteJList);
@@ -134,13 +149,15 @@ public class AddPanel extends JPanel{
 				System.out.println(countryJList.getSelectedValue());
 				for(Country i : dataStore.getCountry()){
 					if(i.getName().equals(countryJList.getSelectedValue())){
-						String[] teamArray = new String[i.getTeam().size()];
-						int count = 0;
-						for(Team j : i.getTeam()){
-							teamArray[count++] = j.getName();
+						if(i.getTeam().size() > 0){
+							String[] teamArray = new String[i.getTeam().size()];
+							int count = 0;
+							for(Team j : i.getTeam()){
+								teamArray[count++] = j.getName();
+							}
+							teamJList.setListData(teamArray);
+							updateUI();
 						}
-						teamJList.setListData(teamArray);
-						updateUI();
 					}
 				}
 				;
@@ -175,6 +192,110 @@ public class AddPanel extends JPanel{
 			
 		});
 		
+		
+	}
+
+	private void cleenTeamJList(){
+		teamJList.setListData(new String[1]);
+		updateUI();
+	}
+	
+	private void cleenAthleteJList(){
+		athleteJList.setListData(new String[1]);
+		updateUI();
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String selectCountry = countryJList.getSelectedValue();
+		String selectTeam = teamJList.getSelectedValue();
+		switch(e.getActionCommand()){
+		case"+國家":
+			String country = JOptionPane.showInputDialog("請輸入國家名稱：");
+			dataStore.addCountry(country);
+			
+			String[] countryList = new String[dataStore.getCountry().size()];
+			int count = 0;
+			for(Country i : dataStore.getCountry()){
+				countryList[count++] = i.getName();
+			}
+			
+			countryJList.setListData(countryList);
+			updateUI();
+			break;
+			
+		case"-國家":
+			if(selectCountry != null){
+				int result = JOptionPane.showConfirmDialog(null, "確定要刪除\"" + selectCountry + "\"嗎？" , "警告",JOptionPane.YES_NO_OPTION);
+				if(result == 0){
+					dataStore.deleteCountry(selectCountry);
+					
+					String[] tempList = new String[dataStore.getCountry().size()];
+					int counttemp = 0;
+					for(Country i : dataStore.getCountry()){
+						tempList[counttemp++] = i.getName();
+						countryJList.setListData(tempList);
+						cleenTeamJList();
+						updateUI();
+					}
+					
+				}
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "請選擇國家");
+			}
+			break;
+			
+		case"+球隊":
+			if(selectCountry != null){
+				String teamName = JOptionPane.showInputDialog("請輸入隊伍名稱：");
+				dataStore.addTeam(selectCountry, teamName);
+				
+				for(Country i : dataStore.getCountry()){
+					if(i.getName().equals(selectCountry)){
+						int tempCount = 0;
+						String[] teamList = new String[dataStore.getCountry().size()];
+						for(Team j : i.getTeam()){
+							teamList[tempCount++] = j.getName();
+						}
+						teamJList.setListData(teamList);
+						updateUI();
+						break;
+					}
+				}
+				break;
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "請選擇國家");
+			}
+			
+		case"-球隊":
+			if(selectCountry != null && selectTeam!= null){
+				int result = JOptionPane.showConfirmDialog(null, "確定要刪除\"" + selectTeam + "\"嗎？" , "警告",JOptionPane.YES_NO_OPTION);
+				if(result == 0){
+					dataStore.deleteTeam(selectCountry, selectTeam);
+					for(Country i : dataStore.getCountry()){
+						if(i.getName().equals(selectCountry)){
+							String[] teamList = new String[i.getTeam().size()];
+							int tempCount = 0;
+							for(Team j : i.getTeam()){
+								teamList[tempCount++] = j.getName();
+							}
+							teamJList.setListData(teamList);
+							cleenAthleteJList();
+							updateUI();
+						}
+					}
+					
+				}
+			}
+			else if(selectCountry == null){
+				JOptionPane.showMessageDialog(null, "請選擇國家");
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "請選擇隊伍");
+			}
+		}
 	}
 	
 }

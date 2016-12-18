@@ -55,4 +55,59 @@ public class DataStore {
 	private void readEventSchedule(){
 		eventSchedule = new EventScheduleIO().read();
 	}
+	
+	public void addCountry(String countryName){
+		countrySet.add(new Country(countryName));
+		ObjectIO<Country> countryIO = new CountryIO();
+		countryIO.write(countrySet);
+		ObjectIO<Team> teamIO = new TeamIO(countryName);
+		teamIO.write(new TreeSet<Team>());
+		readTeam();
+	}
+	
+	public void deleteCountry(String countryName){
+		ObjectIO<Country> countryIO = new CountryIO();
+		for(Country i : countrySet){
+			if(i.getName().equals(countryName)){
+				countrySet.remove(i);
+				break;
+			}
+		}
+		countryIO.write(countrySet);
+	}
+	
+	public void addTeam(String countryName , String teamName){
+		ObjectIO<Team> teamIO = new TeamIO(countryName);
+		TreeSet<Team> teamSet = new TreeSet<Team>();
+		for(Country i : countrySet){
+			if(i.getName().equals(countryName)){
+				teamSet = i.getTeam();
+				break;
+			}
+		}
+		teamSet.add(new Team(teamName , null ,null));
+		teamIO.write(teamSet);
+		ObjectIO<Athlete> athleteIO = new AthleteIO(countryName , teamName);
+		athleteIO.write(new TreeSet<Athlete>());
+		readTeam();
+		readAthlete();
+	}
+	
+	public void deleteTeam(String countryName ,String teamName){
+		ObjectIO<Team> teamIO = new TeamIO(countryName);
+		TreeSet<Team> tempTeam = new TreeSet<Team>();
+		for(Country i : countrySet){
+			if(i.getName().equals(countryName)){
+				for(Team j : i.getTeam()){
+					if(j.getName().equals(teamName)){
+						tempTeam = i.getTeam();
+						tempTeam.remove(j);
+						i.setTeam(tempTeam);
+						teamIO.write(tempTeam);
+						break;
+					}
+				}
+			}
+		}
+	}
 }
