@@ -8,11 +8,13 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -81,8 +83,8 @@ public class AddPanel extends JPanel implements ActionListener{
 		gridBagConstraints.weightx = 0;
 		gridBagConstraints.weighty = 0;
 		gridBagConstraints.gridwidth = 1;
-		JButton addTeamButton = new JButton("+球隊");
-		JButton subTeamButton = new JButton("-球隊");
+		JButton addTeamButton = new JButton("+隊伍");
+		JButton subTeamButton = new JButton("-隊伍");
 		addTeamButton.addActionListener(this);
 		this.add(addTeamButton);
 		gridBagLayout.setConstraints(addTeamButton, gridBagConstraints);
@@ -144,8 +146,8 @@ public class AddPanel extends JPanel implements ActionListener{
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				athleteJList.setListData(new String[1]);
-				updateUI();
+				cleenTeamJList();
+				cleenAthleteJList();
 				System.out.println(countryJList.getSelectedValue());
 				for(Country i : dataStore.getCountry()){
 					if(i.getName().equals(countryJList.getSelectedValue())){
@@ -182,6 +184,7 @@ public class AddPanel extends JPanel implements ActionListener{
 								for(Athlete k : j.getAthlete()){
 									athleteArray[count++] = k.getName();
 								}
+								cleenAthleteJList();
 								athleteJList.setListData(athleteArray);
 								updateUI();
 							}
@@ -196,12 +199,16 @@ public class AddPanel extends JPanel implements ActionListener{
 	}
 
 	private void cleenTeamJList(){
-		teamJList.setListData(new String[1]);
+		teamJList.setModel(new DefaultListModel<String>());
+		DefaultListModel<String> model = (DefaultListModel<String>)teamJList.getModel();
+		model.removeAllElements();
 		updateUI();
 	}
 	
 	private void cleenAthleteJList(){
-		athleteJList.setListData(new String[1]);
+		athleteJList.setModel(new DefaultListModel<String>());
+		DefaultListModel<String> model = (DefaultListModel<String>)athleteJList.getModel();
+		model.removeAllElements();
 		updateUI();
 	}
 	
@@ -221,6 +228,7 @@ public class AddPanel extends JPanel implements ActionListener{
 			}
 			
 			countryJList.setListData(countryList);
+			cleenTeamJList();
 			updateUI();
 			break;
 			
@@ -236,6 +244,7 @@ public class AddPanel extends JPanel implements ActionListener{
 						tempList[counttemp++] = i.getName();
 						countryJList.setListData(tempList);
 						cleenTeamJList();
+						cleenAthleteJList();
 						updateUI();
 					}
 					
@@ -246,18 +255,19 @@ public class AddPanel extends JPanel implements ActionListener{
 			}
 			break;
 			
-		case"+球隊":
+		case"+隊伍":
 			if(selectCountry != null){
 				String teamName = JOptionPane.showInputDialog("請輸入隊伍名稱：");
 				dataStore.addTeam(selectCountry, teamName);
-				
+				cleenTeamJList();
 				for(Country i : dataStore.getCountry()){
 					if(i.getName().equals(selectCountry)){
 						int tempCount = 0;
-						String[] teamList = new String[dataStore.getCountry().size()];
+						String[] teamList = new String[i.getTeam().size()];
 						for(Team j : i.getTeam()){
 							teamList[tempCount++] = j.getName();
 						}
+						
 						teamJList.setListData(teamList);
 						updateUI();
 						break;
@@ -268,8 +278,8 @@ public class AddPanel extends JPanel implements ActionListener{
 			else{
 				JOptionPane.showMessageDialog(null, "請選擇國家");
 			}
-			
-		case"-球隊":
+			break;
+		case"-隊伍":
 			if(selectCountry != null && selectTeam!= null){
 				int result = JOptionPane.showConfirmDialog(null, "確定要刪除\"" + selectTeam + "\"嗎？" , "警告",JOptionPane.YES_NO_OPTION);
 				if(result == 0){

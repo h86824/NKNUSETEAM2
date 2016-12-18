@@ -62,7 +62,9 @@ public class DataStore {
 		countryIO.write(countrySet);
 		ObjectIO<Team> teamIO = new TeamIO(countryName);
 		teamIO.write(new TreeSet<Team>());
+		readCountry();
 		readTeam();
+		readAthlete();
 	}
 	
 	public void deleteCountry(String countryName){
@@ -89,6 +91,7 @@ public class DataStore {
 		teamIO.write(teamSet);
 		ObjectIO<Athlete> athleteIO = new AthleteIO(countryName , teamName);
 		athleteIO.write(new TreeSet<Athlete>());
+		readCountry();
 		readTeam();
 		readAthlete();
 	}
