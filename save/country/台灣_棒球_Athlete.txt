@@ -1,4 +1,4 @@
-name=選手A
+name=棒球選手A
 gender=男
 age=18
 getProfession=棒球
@@ -6,7 +6,7 @@ height=155
 weight=65
 country=台灣
 
-name=選手B
+name=棒球選手B
 gender=男
 age=19
 getProfession=棒球
@@ -14,7 +14,7 @@ height=165
 weight=75
 country=台灣
 
-name=選手C
+name=棒球選手C
 gender=男
 age=18
 getProfession=棒球

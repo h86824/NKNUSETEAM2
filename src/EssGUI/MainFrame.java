@@ -19,44 +19,118 @@ public class MainFrame extends JFrame implements ActionListener{
 	JPanel openPanel = new JPanel();
 	EventSchedule ES;
 	DataStore dataStore = new DataStore();
+	JPanel titlePanel = new JPanel();
+	JLabel title;
+	GridBagConstraints GBC = new GridBagConstraints();
+	GridBagLayout GBL = new GridBagLayout();
 	public MainFrame(){	
 		setRandomScheduleBuilder();
 		replanSchedule();
+		title = new JLabel("首頁");
+		title.setFont(new FontUIResource("標楷體",Font.CENTER_BASELINE,20));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setUIFont(new FontUIResource("新細明體",Font.CENTER_BASELINE,28));
-		this.setSize(1920,1080);
-		this.setBounds(10, 10,1920, 1080);
+		setUIFont(new FontUIResource("新細明體",Font.CENTER_BASELINE,18));
+		
+		//this.setBounds(5, 5,800, 600);
+		this.setSize(1000, 800);
+		this.setLayout(GBL);
 		setMainPanel();
-		this.getContentPane().add(openPanel, BorderLayout.CENTER);
-		this.getContentPane().add(mainPanel, BorderLayout.WEST);
+		
+		GBC.insets = new Insets(10,10,10,10);
+		GBC.ipadx = 0;
+		GBC.ipady = 9;
+		GBC.gridheight = 1;
+		GBC.gridwidth = 0;
+		GBC.weightx = 1.0;
+		GBC.weighty = 0;
+		GBC.fill = GridBagConstraints.BOTH;
+		titlePanel.add(title);
+		titlePanel.setBackground(Color.orange);
+		this.getContentPane().add(titlePanel);
+		GBL.setConstraints(titlePanel, GBC);
+		GBC.gridheight = 8;
+		GBC.gridwidth = 1;
+		GBC.weightx = 0;
+		GBC.weighty = 0.2;
+		GBC.fill = GridBagConstraints.BOTH;
+		this.getContentPane().add(mainPanel);
+		GBL.setConstraints(mainPanel, GBC);
+		GBC.gridheight = 0;
+		GBC.gridwidth = 10;
+		GBC.weightx = 1.0;
+		GBC.weighty = 0.8;
+		openPanel.setLayout(GBL);
+		openPanel.setBackground(Color.PINK);
+		this.getContentPane().add(openPanel);
+		GBL.setConstraints(openPanel, GBC);
 		this.setVisible(true);
 	}
 	
 	private void setMainPanel(){
-		mainPanel = new JPanel(new GridLayout(3,1));
-		JButton button1 = new JButton( "顯示賽程" );
-		JButton button2 = new JButton( "重新安排賽程" );
-		JButton button3 = new JButton( "button3" );
-		button1.addActionListener(this);
-		button2.addActionListener(this);
-		button3.addActionListener(this);
-		mainPanel.setBounds(10, 10, 50, 200);
-		mainPanel.add(button1);
-		mainPanel.add(button2);
-		mainPanel.add(button3);
+		//GridBagConstraints GBC = new GridBagConstraints();
+		//GridBagLayout GBL = new GridBagLayout();
+		mainPanel.setLayout(GBL);
+		GBC.gridheight = 2;
+		GBC.gridwidth = 0;
+		GBC.weightx = 0;
+		GBC.weighty = 1;
+		GBC.insets = new Insets(10,0,0,0);
+		GBC.fill = GridBagConstraints.BOTH;
+		JButton[] button = new JButton[3];
+		String [] buttonStr = {"顯示賽程" , "重新安排賽程" , "調整隊伍"};
+		for(int i = 0 ; i < 3 ; i++){
+			button[i] = new JButton(buttonStr[i]);
+			button[i].addActionListener(this);
+			mainPanel.add(button[i]);
+			GBL.setConstraints(button[i], GBC);
+		}
+		
 	}
 	
 	private void setOpenPanelShowSchedule() {
 		openPanel.removeAll();
+		GBC.gridheight = 1;
+		GBC.gridwidth = 0;
+		GBC.weightx = 0;
+		GBC.weighty = 0;
+		GBC.insets = new Insets(10,10,10,10);
+		GBC.fill = GridBagConstraints.BOTH;
 		TreeSet<Event> ESSet = dataStore.getEventSchedule().getEvents();
-		JPanel panel = new JPanel(new GridLayout(ESSet.size(),6));
+		JPanel panel = new JPanel();
+		panel.setLayout(GBL);
 		for(Event i : ESSet){
-			String [] tempString = i.toString().split(" ");
-			for(String j : tempString){
-				panel.add(new JLabel(j));
-			}
+			JLabel timeJLabel = new JLabel(i.getTime().toString());
+			GBC.gridheight = 1;
+			GBC.gridwidth = 2;
+			GBC.weightx = 0;
+			GBC.weighty = 0;
+			GBC.insets = new Insets(10,0,0,15);
+			GBC.fill = GridBagConstraints.BOTH;
+			panel.add(timeJLabel);
+			GBL.setConstraints(timeJLabel, GBC);
+			
+			JLabel teamAJLabel = new JLabel(i.getTeamA());
+			panel.add(teamAJLabel);
+			GBL.setConstraints(teamAJLabel, GBC);
+			
+			JLabel markJLabel = new JLabel(":");
+			panel.add(markJLabel);
+			GBL.setConstraints(markJLabel, GBC);
+			
+			JLabel teamBJLabel = new JLabel(i.getTeamB());
+			GBC.gridwidth = 0;
+			panel.add(teamBJLabel);
+			GBL.setConstraints(teamBJLabel, GBC);
 		}
+		
+		GBC.gridheight = 8;
+		GBC.gridwidth = 10;
+		GBC.weightx = 1;
+		GBC.weighty = 1;
+		GBC.insets = new Insets(10,10,10,10);
+		GBC.fill = GridBagConstraints.BOTH;
 		openPanel.add(panel);
+		GBL.setConstraints(panel, GBC);
 		openPanel.updateUI();
 	}
 	
@@ -67,9 +141,16 @@ public class MainFrame extends JFrame implements ActionListener{
 	
 	private void setOpenPanelButton3() {
 		openPanel.removeAll();
-		JPanel panelButton3 = new JPanel();
-		panelButton3.add( new JLabel("button3"));
-		openPanel.add(panelButton3);
+		openPanel.removeAll();
+		GBC.gridheight = 10;
+		GBC.gridwidth = 10;
+		GBC.weightx = 1;
+		GBC.weighty = 1;
+		//JPanel panelButton3 = new JPanel();
+		//panelButton3.add( new JLabel("button3"));
+		JPanel panel = new AddPanel(dataStore);
+		openPanel.add(panel);
+		GBL.setConstraints(panel, GBC);
 		openPanel.updateUI();
 	}
 
@@ -80,14 +161,17 @@ public class MainFrame extends JFrame implements ActionListener{
 		switch(e.getActionCommand()){
 		case "顯示賽程":
 			System.out.println("顯示賽程");
+			title.setText("顯示賽程");
 			setOpenPanelShowSchedule();
 			break;
 		case "重新安排賽程":
 			System.out.println("重新安排賽程");
+			title.setText("顯示賽程");
 			setOpenPanelReplan();
 			break;
-		case "button3":
+		case "調整隊伍":
 			System.out.println("press button3");
+			title.setText("新增隊伍");
 			setOpenPanelButton3();
 			break;
 		}

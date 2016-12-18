@@ -56,7 +56,7 @@ public class Time implements Comparable<Time>{
 	
 	@Override
 	public String toString(){
-		return String.format("%d/%d/%d %02d%02d", year, month, day, hour, minute);
+		return String.format("%d/%d/%d %02d:%02d", year, month, day, hour, minute);
 	}
 
 	@Override
