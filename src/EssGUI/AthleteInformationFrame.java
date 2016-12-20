@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.TreeSet;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -16,19 +17,36 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import EssIO.AthleteIO;
 import EssIO.DataStore;
+import EssIO.ObjectIO;
 import EssObject.Athlete;
 
 public class AthleteInformationFrame extends JFrame implements ActionListener{
 	GridBagConstraints GBC = new GridBagConstraints();
 	GridBagLayout GBL = new GridBagLayout();
+	String countryName;
+	String teamName;
 	DataStore dataStore;
 	Athlete athlete;
 	
-	public AthleteInformationFrame(DataStore dataStore , Athlete athlete){
+	JTextField nameTextField;
+	JTextField ageTextField;
+	JTextField professionTextField;
+	JTextField genderTextField;
+	JTextField heightTextField;
+	JTextField weightTextField;
+	JTextField countryTextField;
+	JButton editJButton;
+	JButton confirmJButton;
+	JButton cancelJButton;
+	
+	public AthleteInformationFrame(DataStore dataStore ,String countryName , String teamName , Athlete athlete ,Boolean editable){
 		/*傳入參考*/
 		this.dataStore = dataStore;
 		this.athlete = athlete;
+		this.countryName = countryName;
+		this.teamName = teamName;
 		
 		/*設定大小*/
 		java.awt.Dimension scr_size = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
@@ -53,9 +71,9 @@ public class AthleteInformationFrame extends JFrame implements ActionListener{
 		GBL.setConstraints(nameJLabel, GBC);
 		
 		setGBC(1);
-		JTextField nameTextField = new JTextField( athlete.getName() );
+		nameTextField = new JTextField();
 		this.add(nameTextField);
-		nameTextField.setEditable(false);
+		nameTextField.setEditable(editable);
 		GBL.setConstraints(nameTextField, GBC);
 		
 		/**性別**/
@@ -65,9 +83,9 @@ public class AthleteInformationFrame extends JFrame implements ActionListener{
 		GBL.setConstraints(genderJLabel, GBC);
 		
 		setGBC(1);
-		JTextField genderTextField = new JTextField( athlete.getGender() );
+		genderTextField = new JTextField();
 		this.add(genderTextField);
-		genderTextField.setEditable(false);
+		genderTextField.setEditable(editable);
 		GBL.setConstraints(genderTextField, GBC);
 		
 		/**年齡**/
@@ -77,9 +95,9 @@ public class AthleteInformationFrame extends JFrame implements ActionListener{
 		GBL.setConstraints(ageJLabel, GBC);
 		
 		setGBC(1);
-		JTextField ageTextField = new JTextField( athlete.getAge() + "" );
+		ageTextField = new JTextField();
 		this.add(ageTextField);
-		ageTextField.setEditable(false);
+		ageTextField.setEditable(editable);
 		GBL.setConstraints(ageTextField, GBC);
 		
 		/**職業**/
@@ -89,9 +107,9 @@ public class AthleteInformationFrame extends JFrame implements ActionListener{
 		GBL.setConstraints(professionJLabel, GBC);
 		
 		setGBC(1);
-		JTextField professionTextField = new JTextField( athlete.getProfession() + "" );
+		professionTextField = new JTextField();
 		this.add(professionTextField);
-		professionTextField.setEditable(false);
+		professionTextField.setEditable(editable);
 		GBL.setConstraints(professionTextField, GBC);
 		
 		/**身高**/
@@ -101,9 +119,9 @@ public class AthleteInformationFrame extends JFrame implements ActionListener{
 		GBL.setConstraints(heightJLabel, GBC);
 		
 		setGBC(1);
-		JTextField heightTextField = new JTextField( athlete.getHeight() + "" );
+		heightTextField = new JTextField();
 		this.add(heightTextField);
-		heightTextField.setEditable(false);
+		heightTextField.setEditable(editable);
 		GBL.setConstraints(heightTextField, GBC);
 		
 		/**體重**/
@@ -113,9 +131,9 @@ public class AthleteInformationFrame extends JFrame implements ActionListener{
 		GBL.setConstraints(weightJLabel, GBC);
 		
 		setGBC(1);
-		JTextField weightTextField = new JTextField( athlete.getWeight() + "" );
+		weightTextField = new JTextField();
 		this.add(weightTextField);
-		weightTextField.setEditable(false);
+		weightTextField.setEditable(editable);
 		GBL.setConstraints(weightTextField, GBC);
 		
 		/**國籍**/
@@ -125,10 +143,13 @@ public class AthleteInformationFrame extends JFrame implements ActionListener{
 		GBL.setConstraints(countryJLabel, GBC);
 		
 		setGBC(1);
-		JTextField countryTextField = new JTextField( athlete.getCountry() + "" );
+		countryTextField = new JTextField();
 		this.add(countryTextField);
-		countryTextField.setEditable(false);
+		countryTextField.setEditable(editable);
 		GBL.setConstraints(countryTextField, GBC);
+		
+		/**丟入資料**/
+		fillTextField();
 		
 		/**按鈕**/
 		setGBC(2);
@@ -137,22 +158,36 @@ public class AthleteInformationFrame extends JFrame implements ActionListener{
 		GBL.setConstraints(buttonJPanel, GBC);
 		
 		setGBC(0);
-		JButton editJButton = new JButton("編輯");
+		editJButton = new JButton("編輯");
 		editJButton.addActionListener(this);
+		editJButton.setEnabled(true);
+		if(editable)
+			editJButton.setText("儲存後關閉");
 		buttonJPanel.add(editJButton);
 		GBL.setConstraints(editJButton, GBC);
 		
-		JButton confirmJButton = new JButton("確認");
+		confirmJButton = new JButton("確認");
 		confirmJButton.addActionListener(this);
-		confirmJButton.setEnabled(false);
+		confirmJButton.setEnabled(editable);
 		buttonJPanel.add(confirmJButton);
 		GBL.setConstraints(confirmJButton, GBC);
 		
-		JButton cancelJButton = new JButton("取消");
+		cancelJButton = new JButton("取消");
 		cancelJButton.addActionListener(this);
-		cancelJButton.setEnabled(false);
+		cancelJButton.setEnabled(editable);
 		buttonJPanel.add(cancelJButton);
 		GBL.setConstraints(cancelJButton, GBC);
+	}
+	
+	/*初始化欄位*/
+	private void fillTextField(){
+		nameTextField.setText(athlete.getName());
+		ageTextField.setText(athlete.getAge() + "");
+		professionTextField.setText(athlete.getProfession());
+		genderTextField.setText(athlete.getGender());
+		heightTextField.setText(athlete.getHeight() + "");
+		weightTextField.setText(athlete.getWeight() + "");
+		countryTextField.setText(athlete.getCountry());
 	}
 	
 	/*GBC樣式設定*/
@@ -192,7 +227,110 @@ public class AthleteInformationFrame extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		boolean check = false;
+		switch(e.getActionCommand()){
+		case"編輯":
+			setEditMode(true);
+			break;
+		case"確認":
+			check = updateInformation();
+			if(check)
+				setEditMode(false);
+			break;
+		case"取消":
+			setEditMode(false);
+			fillTextField();
+			break;
+		case"儲存後關閉":
+			check = updateInformation();
+			if(check)
+				this.dispose();
+			break;
+		}
+	}
+	
+	private void setEditMode(Boolean mode){
+		nameTextField.setEditable(mode);
+		ageTextField.setEditable(mode);
+		professionTextField.setEditable(mode);
+		genderTextField.setEditable(mode);
+		heightTextField.setEditable(mode);
+		weightTextField.setEditable(mode);
+		countryTextField.setEditable(mode);
+		editJButton.setEnabled(true);
+		if(mode)
+			editJButton.setText("儲存後關閉");
+		else
+			editJButton.setText("編輯");
+		confirmJButton.setEnabled(mode);
+		cancelJButton.setEnabled(mode);
+	}
+	
+	private boolean updateInformation(){
+		dataStore.deleteAthlete(countryName, teamName, athlete);
 		
+		if(nameTextField.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "請輸入姓名");
+			return false;
+		}
+		athlete.setName(nameTextField.getText());
+		
+		if(ageTextField.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "請輸入年齡");
+			return false;
+		}
+		try{
+			athlete.setAge(Integer.parseInt(ageTextField.getText()));
+		}
+		catch(NumberFormatException e){
+			JOptionPane.showMessageDialog(null, "請輸入正確年齡");
+			return false;
+		}
+		
+		
+		if(professionTextField.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "請輸入職業");
+			return false;
+		}
+		athlete.setProfession(professionTextField.getText());
+		
+		if(genderTextField.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "請輸入性別");
+			return false;
+		}
+		athlete.setGender(genderTextField.getText());
+		
+		if(heightTextField.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "請輸入身高");
+			return false;
+		}
+		try{
+			athlete.setHeight(Integer.parseInt(heightTextField.getText()));
+		}
+		catch(NumberFormatException e){
+			JOptionPane.showMessageDialog(null, "請輸入正確身高");
+			return false;
+		}
+		
+		if(weightTextField.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "請輸入體重");
+			return false;
+		}
+		try{
+			athlete.setWeight(Integer.parseInt(weightTextField.getText()));
+		}
+		catch(NumberFormatException e){
+			JOptionPane.showMessageDialog(null, "請輸入正確體重");
+			return false;
+		}
+		
+		if(countryTextField.getText().equals("")){
+			JOptionPane.showMessageDialog(null, "請輸入國籍");
+			return false;
+		}
+		athlete.setCountry(countryTextField.getText());
+		
+		dataStore.addAthlete(countryName, teamName, athlete);
+		return true;
 	}
 }

@@ -113,4 +113,49 @@ public class DataStore {
 			}
 		}
 	}
+	
+	public void addAthlete(String countryName, String teamName, Athlete athlete){
+		ObjectIO<Athlete> athleteIO = new AthleteIO(countryName, teamName);
+		TreeSet<Athlete> athleteSet = new TreeSet<Athlete>();
+		Team refTeam = getReference(countryName , teamName);
+		athleteSet = refTeam.getAthlete();
+		athleteSet.add(athlete);
+		athleteIO.write(athleteSet);
+		readCountry();
+		readTeam();
+		readAthlete();	
+	}
+	
+	public void deleteAthlete(String countryName, String teamName, Athlete athlete){
+		ObjectIO<Athlete> athleteIO = new AthleteIO(countryName, teamName);
+		TreeSet<Athlete> athleteSet = new TreeSet<Athlete>();
+		Team refTeam = getReference(countryName , teamName);
+		athleteSet = refTeam.getAthlete();
+		athleteSet.remove(athlete);
+		athleteIO.write(athleteSet);
+		readCountry();
+		readTeam();
+		readAthlete();
+	}
+	
+	/*取得參考*/
+	public Country getReference(String countryName){
+		for(Country i : countrySet){
+			if(i.getName().equals(countryName))
+				return i;
+		}
+		return null;
+	}
+	
+	public Team getReference(String countryName , String teamName){
+		for(Country i : countrySet){
+			if(i.getName().equals(countryName)){
+				for(Team j : i.getTeam()){
+					if(j.getName().equals(teamName))
+						return j;
+				}
+			}
+		}
+		return null;
+	}
 }

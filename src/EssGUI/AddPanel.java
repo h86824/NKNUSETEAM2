@@ -10,6 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
+import java.awt.event.WindowListener;
+import java.util.TreeSet;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -30,7 +34,7 @@ import EssObject.Athlete;
 import EssObject.Country;
 import EssObject.Team;
 
-public class AddPanel extends JPanel implements ActionListener{
+public class AddPanel extends JPanel implements ActionListener , WindowListener{
 	DataStore dataStore;
 	GridBagConstraints gridBagConstraints = new GridBagConstraints();
 	GridBagLayout gridBagLayout = new GridBagLayout();
@@ -217,7 +221,7 @@ public class AddPanel extends JPanel implements ActionListener{
 								 if(j.getName().equals(teamJList.getSelectedValue())){
 									 for(Athlete k : j.getAthlete()){
 										 if(k.getName().equals(athleteJList.getSelectedValue())){
-											 new AthleteInformationFrame(dataStore, k);
+											 new AthleteInformationFrame(dataStore, i.getName(), j.getName(), k ,false);
 										 }
 									 }
 								 }
@@ -247,6 +251,7 @@ public class AddPanel extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		String selectCountry = countryJList.getSelectedValue();
 		String selectTeam = teamJList.getSelectedValue();
+		String selectAthlete = athleteJList.getSelectedValue();
 		switch(e.getActionCommand()){
 		case"+國家":
 			String country = JOptionPane.showInputDialog("請輸入國家名稱：");
@@ -340,7 +345,98 @@ public class AddPanel extends JPanel implements ActionListener{
 			else{
 				JOptionPane.showMessageDialog(null, "請選擇隊伍");
 			}
+			break;
+		case"+選手":
+			if(selectCountry != null && selectTeam!= null){
+				JFrame athleteInformationFrame = new AthleteInformationFrame(dataStore, selectCountry, selectTeam
+						, new Athlete("", "", 0, selectTeam, 0, 0, selectCountry, null, null)
+						, true);
+				athleteInformationFrame.addWindowListener(this);
+			}
+			else if(selectCountry == null){
+				JOptionPane.showMessageDialog(null, "請選擇國家");
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "請選擇隊伍");
+			}
+			break;
+		case"-選手":
+			if(selectCountry != null && selectTeam != null && selectAthlete != null){
+				TreeSet<Athlete> athleteSet = new TreeSet<Athlete>();
+				Team refTeam = dataStore.getReference(selectCountry, selectTeam);
+				athleteSet = refTeam.getAthlete();
+				for(Athlete i : athleteSet){
+					if(i.getName().equals(selectAthlete)){
+						dataStore.deleteAthlete(selectCountry, selectTeam, i);
+						break;
+					}
+				}
+				String[] athleteArray = new String[athleteSet.size()];
+				int athletetemp = 0;
+				for(Athlete i :athleteSet){
+					athleteArray[athletetemp++] = i.getName();
+				}
+				cleenAthleteJList();
+				athleteJList.setListData(athleteArray);
+			}
+			else if(selectCountry == null){
+				JOptionPane.showMessageDialog(null, "請選擇國家");
+			}
+			else if(selectTeam == null){
+				JOptionPane.showMessageDialog(null, "請選擇隊伍");
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "請選擇選手");
+			}
 		}
 	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		TreeSet<Athlete> athleteSet = dataStore.getReference(countryJList.getSelectedValue(), teamJList.getSelectedValue()).getAthlete();
+		String[] athleteArray = new String[athleteSet.size()];
+		int athletetemp = 0;
+		for(Athlete i :athleteSet){
+			athleteArray[athletetemp++] = i.getName();
+		}
+		cleenAthleteJList();
+		athleteJList.setListData(athleteArray);
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }
