@@ -3,6 +3,8 @@ package EssGUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.Enumeration;
 import java.util.TreeSet;
 import javax.swing.*;
@@ -13,7 +15,7 @@ import EssObject.*;
 import EssObject.Event;
 import EssProcess.RandomScheduleBuilder;
 
-public class MainFrame extends JFrame implements ActionListener{
+public class MainFrame extends JFrame implements ActionListener {
 	RandomScheduleBuilder RSB;
 	JPanel mainPanel = new JPanel();
 	JPanel openPanel = new JPanel();
@@ -26,14 +28,23 @@ public class MainFrame extends JFrame implements ActionListener{
 	public MainFrame(){	
 		setRandomScheduleBuilder();
 		replanSchedule();
-		title = new JLabel("首頁");
-		title.setFont(new FontUIResource("標楷體",Font.CENTER_BASELINE,20));
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setUIFont(new FontUIResource("新細明體",Font.CENTER_BASELINE,18));
 		
 		//this.setBounds(5, 5,800, 600);
-		this.setSize(1000, 800);
 		this.setLayout(GBL);
+		/*設定大小*/
+		java.awt.Dimension scr_size = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+		this.setSize(scr_size.width * 3 / 4 , scr_size.height * 3 / 4);
+		this.setLocation(
+				   (scr_size.width - this.getWidth()) / 2,
+				   (scr_size.height - this.getHeight()) / 2);
+		
+		/*視窗設定*/
+		this.setTitle("第二組");
+		title = new JLabel("首頁");
+		title.setFont(new FontUIResource("標楷體",Font.CENTER_BASELINE,scr_size.height / 1080 * 20));
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setUIFont(new FontUIResource("新細明體",Font.CENTER_BASELINE,scr_size.height / 1080 * 18));
+		
 		setMainPanel();
 		
 		GBC.insets = new Insets(10,10,10,10);
@@ -209,4 +220,5 @@ public class MainFrame extends JFrame implements ActionListener{
 			 }
 		 } 
 	}
+
 }

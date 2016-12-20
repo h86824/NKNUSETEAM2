@@ -1,19 +1,25 @@
 package EssGUI;
 
 import java.awt.Color;
+import java.awt.Dialog;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -59,7 +65,7 @@ public class AddPanel extends JPanel implements ActionListener{
 		/*國家標題欄*/
 		JLabel counrtyJLabel = new JLabel("國家");
 		JLabel teamJLabel = new JLabel("隊伍");
-		JLabel athleteJLabel = new JLabel("選手");
+		JLabel athleteJLabel = new JLabel("選手(雙擊開啟詳細資訊)");
 		this.add(counrtyJLabel, gridBagConstraints);
 		gridBagLayout.setConstraints(counrtyJLabel, gridBagConstraints);
 		gridBagConstraints.weightx = 0;
@@ -100,7 +106,7 @@ public class AddPanel extends JPanel implements ActionListener{
 		gridBagLayout.setConstraints(athleteJLabel, gridBagConstraints);
 		gridBagConstraints.weightx = 0;
 		gridBagConstraints.weighty = 0;
-		gridBagConstraints.gridwidth = 3;
+		gridBagConstraints.gridwidth = 1;
 		JButton addAthleteButton = new JButton("+選手");
 		JButton subAthleteButton = new JButton("-選手");
 		addAthleteButton.addActionListener(this);
@@ -124,24 +130,28 @@ public class AddPanel extends JPanel implements ActionListener{
 		countryJList = new JList<String>(countryList);
 		countryJList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		countryJList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-		this.add(countryJList);
-		gridBagLayout.setConstraints(countryJList, gridBagConstraints);
+		JScrollPane countryJScrollPane = new JScrollPane(countryJList);
+		this.add(countryJScrollPane);
+		gridBagLayout.setConstraints(countryJScrollPane, gridBagConstraints);
 		
 		/*隊伍清單*/
 		teamJList = new JList<String>();
 		teamJList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		teamJList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-		this.add(teamJList);
-		gridBagLayout.setConstraints(teamJList, gridBagConstraints);
+		JScrollPane teamJScrollPane = new JScrollPane(teamJList);
+		this.add(teamJScrollPane);
+		gridBagLayout.setConstraints(teamJScrollPane, gridBagConstraints);
 		
 		/*選手清單*/
 		athleteJList = new JList<String>();
 		athleteJList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		athleteJList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-		this.add(athleteJList);
-		gridBagConstraints.gridwidth = 0;
-		gridBagLayout.setConstraints(athleteJList, gridBagConstraints);
+		JScrollPane athleteJScrollPane = new JScrollPane(athleteJList);
+		this.add(athleteJScrollPane);
+		gridBagConstraints.gridwidth = 3;
+		gridBagLayout.setConstraints(athleteJScrollPane, gridBagConstraints);
 		
+		/*國家清單事件*/
 		countryJList.addListSelectionListener(new ListSelectionListener(){
 			
 			@Override
@@ -167,6 +177,7 @@ public class AddPanel extends JPanel implements ActionListener{
 			
 		});
 		
+		/*隊伍清單事件*/
 		teamJList.addListSelectionListener(new ListSelectionListener(){
 			
 			@Override
@@ -195,9 +206,29 @@ public class AddPanel extends JPanel implements ActionListener{
 			
 		});
 		
-		
+		/*選手清單事件*/
+		athleteJList.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e){
+				 if(e.getClickCount() == 2){
+					 System.out.println("two Click event");
+					 for(Country i :dataStore.getCountry()){
+						 if(i.getName().equals(countryJList.getSelectedValue())){
+							 for(Team j : i.getTeam()){
+								 if(j.getName().equals(teamJList.getSelectedValue())){
+									 for(Athlete k : j.getAthlete()){
+										 if(k.getName().equals(athleteJList.getSelectedValue())){
+											 new AthleteInformationFrame(dataStore, k);
+										 }
+									 }
+								 }
+							 }
+						 }
+					 }
+				 }
+			 }
+		});
 	}
-
+	
 	private void cleenTeamJList(){
 		teamJList.setModel(new DefaultListModel<String>());
 		DefaultListModel<String> model = (DefaultListModel<String>)teamJList.getModel();
@@ -219,17 +250,19 @@ public class AddPanel extends JPanel implements ActionListener{
 		switch(e.getActionCommand()){
 		case"+國家":
 			String country = JOptionPane.showInputDialog("請輸入國家名稱：");
-			dataStore.addCountry(country);
-			
-			String[] countryList = new String[dataStore.getCountry().size()];
-			int count = 0;
-			for(Country i : dataStore.getCountry()){
-				countryList[count++] = i.getName();
+			if(country!=null){
+				dataStore.addCountry(country);
+				
+				String[] countryList = new String[dataStore.getCountry().size()];
+				int count = 0;
+				for(Country i : dataStore.getCountry()){
+					countryList[count++] = i.getName();
+				}
+				
+				countryJList.setListData(countryList);
+				cleenTeamJList();
+				updateUI();
 			}
-			
-			countryJList.setListData(countryList);
-			cleenTeamJList();
-			updateUI();
 			break;
 			
 		case"-國家":
@@ -258,19 +291,21 @@ public class AddPanel extends JPanel implements ActionListener{
 		case"+隊伍":
 			if(selectCountry != null){
 				String teamName = JOptionPane.showInputDialog("請輸入隊伍名稱：");
-				dataStore.addTeam(selectCountry, teamName);
-				cleenTeamJList();
-				for(Country i : dataStore.getCountry()){
-					if(i.getName().equals(selectCountry)){
-						int tempCount = 0;
-						String[] teamList = new String[i.getTeam().size()];
-						for(Team j : i.getTeam()){
-							teamList[tempCount++] = j.getName();
+				if(teamName!=null){
+					dataStore.addTeam(selectCountry, teamName);
+					cleenTeamJList();
+					for(Country i : dataStore.getCountry()){
+						if(i.getName().equals(selectCountry)){
+							int tempCount = 0;
+							String[] teamList = new String[i.getTeam().size()];
+							for(Team j : i.getTeam()){
+								teamList[tempCount++] = j.getName();
+							}
+							
+							teamJList.setListData(teamList);
+							updateUI();
+							break;
 						}
-						
-						teamJList.setListData(teamList);
-						updateUI();
-						break;
 					}
 				}
 				break;
