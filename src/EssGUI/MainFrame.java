@@ -87,9 +87,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		GBC.weighty = 1;
 		GBC.insets = new Insets(10,0,0,0);
 		GBC.fill = GridBagConstraints.BOTH;
-		JButton[] button = new JButton[3];
-		String [] buttonStr = {"顯示賽程" , "重新安排賽程" , "調整隊伍"};
-		for(int i = 0 ; i < 3 ; i++){
+		JButton[] button = new JButton[4];
+		String [] buttonStr = {"顯示賽程" , "重新安排賽程" , "調整隊伍","查詢"};
+		for(int i = 0 ; i < 4 ; i++){
 			button[i] = new JButton(buttonStr[i]);
 			button[i].addActionListener(this);
 			mainPanel.add(button[i]);
@@ -164,6 +164,13 @@ public class MainFrame extends JFrame implements ActionListener {
 		GBL.setConstraints(panel, GBC);
 		openPanel.updateUI();
 	}
+	private void setOpenPanelSearch() {
+		openPanel.removeAll();
+		JPanel panel =new SearchPanel();
+		openPanel.add(panel);
+		GBL.setConstraints(panel, GBC);
+		openPanel.updateUI();
+	}
 
 	
 	@Override
@@ -184,6 +191,9 @@ public class MainFrame extends JFrame implements ActionListener {
 			System.out.println("press button3");
 			title.setText("新增隊伍");
 			setOpenPanelButton3();
+			break;
+		case "查詢":
+			setOpenPanelSearch();
 			break;
 		}
 	}
