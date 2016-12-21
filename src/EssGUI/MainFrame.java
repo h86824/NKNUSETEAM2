@@ -28,7 +28,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	public MainFrame(){	
 		setRandomScheduleBuilder();
 		replanSchedule();
-		
+		//JDialog d = new AthleteInformationDialog(dataStore, "a", "b", new Athlete("選手C", "男", 18, "B", 158, 45, "TW", null, null),false);
 		//this.setBounds(5, 5,800, 600);
 		this.setLayout(GBL);
 		/*設定大小*/
@@ -45,8 +45,10 @@ public class MainFrame extends JFrame implements ActionListener {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUIFont(new FontUIResource("新細明體",Font.CENTER_BASELINE,scr_size.height / 1080 * 18));
 		
+		/*設定按鈕Panel*/
 		setMainPanel();
 		
+		/*標題欄位*/
 		GBC.insets = new Insets(10,10,10,10);
 		GBC.ipadx = 0;
 		GBC.ipady = 9;
@@ -58,6 +60,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		titlePanel.add(title);
 		titlePanel.setBackground(Color.orange);
 		this.getContentPane().add(titlePanel);
+		
+		/*主按鈕欄位*/
 		GBL.setConstraints(titlePanel, GBC);
 		GBC.gridheight = 8;
 		GBC.gridwidth = 1;
@@ -66,6 +70,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		GBC.fill = GridBagConstraints.BOTH;
 		this.getContentPane().add(mainPanel);
 		GBL.setConstraints(mainPanel, GBC);
+		
+		/*主要畫面*/
 		GBC.gridheight = 0;
 		GBC.gridwidth = 10;
 		GBC.weightx = 1.0;
@@ -74,9 +80,12 @@ public class MainFrame extends JFrame implements ActionListener {
 		openPanel.setBackground(Color.PINK);
 		this.getContentPane().add(openPanel);
 		GBL.setConstraints(openPanel, GBC);
+		
+		/*顯示Frame*/
 		this.setVisible(true);
 	}
 	
+	/*設定主要按鈕*/
 	private void setMainPanel(){
 		//GridBagConstraints GBC = new GridBagConstraints();
 		//GridBagLayout GBL = new GridBagLayout();
@@ -98,7 +107,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 	}
 	
+	/*設定顯示畫面——賽程表*/
 	private void setOpenPanelShowSchedule() {
+		//設定Panel layout
 		openPanel.removeAll();
 		GBC.gridheight = 1;
 		GBC.gridwidth = 0;
@@ -106,11 +117,14 @@ public class MainFrame extends JFrame implements ActionListener {
 		GBC.weighty = 0;
 		GBC.insets = new Insets(10,10,10,10);
 		GBC.fill = GridBagConstraints.BOTH;
+		
+		/*讀取Schedule*/
 		TreeSet<Event> ESSet = dataStore.getEventSchedule().getEvents();
 		JPanel panel = new JPanel();
 		panel.setLayout(GBL);
 		for(Event i : ESSet){
 			JLabel timeJLabel = new JLabel(i.getTime().toString());
+			//Label layout
 			GBC.gridheight = 1;
 			GBC.gridwidth = 2;
 			GBC.weightx = 0;
@@ -134,6 +148,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			GBL.setConstraints(teamBJLabel, GBC);
 		}
 		
+		//加入openPanel
 		GBC.gridheight = 8;
 		GBC.gridwidth = 10;
 		GBC.weightx = 1;
@@ -145,24 +160,24 @@ public class MainFrame extends JFrame implements ActionListener {
 		openPanel.updateUI();
 	}
 	
+	/*設定重新排列選項*/
 	private void setOpenPanelReplan() {
 		replanSchedule();
 		setOpenPanelShowSchedule();
 	}
 	
+	/*按鈕三Panel*/
 	private void setOpenPanelButton3() {
-		openPanel.removeAll();
 		openPanel.removeAll();
 		GBC.gridheight = 10;
 		GBC.gridwidth = 10;
 		GBC.weightx = 1;
 		GBC.weighty = 1;
-		//JPanel panelButton3 = new JPanel();
-		//panelButton3.add( new JLabel("button3"));
 		JPanel panel = new AddPanel(dataStore);
 		openPanel.add(panel);
 		GBL.setConstraints(panel, GBC);
 		openPanel.updateUI();
+		
 	}
 	private void setOpenPanelSearch() {
 		openPanel.removeAll();
@@ -172,8 +187,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		openPanel.updateUI();
 	}
 
-	
-	@Override
+	/*事件監視器*/
+		@Override
 	public void actionPerformed(ActionEvent e) {
 		System.out.println("Action Event");
 		switch(e.getActionCommand()){
@@ -198,6 +213,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 	}
 	
+		/*設定隨機排程產生器*/
 	private void setRandomScheduleBuilder(){
 		TreeSet<String> teamSet = new TreeSet<String>();
 		TreeSet<Time> timeSet = new TreeSet<Time>();
@@ -213,6 +229,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		RSB = new RandomScheduleBuilder(teamSet, timeSet);
 	}
 	
+	/*重新安排賽程*/
 	private void replanSchedule(){
 		dataStore.setEvnetSchedule(RSB.getSchedule());
 		for(Event i : dataStore.getEventSchedule().getEvents()){
@@ -220,6 +237,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 	}
 	
+	/*設定全域UI字形*/
 	 public void setUIFont (FontUIResource fui){
 		 Enumeration keys=UIManager.getDefaults().keys();
 		 while (keys.hasMoreElements()) {

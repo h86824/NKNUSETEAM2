@@ -1,34 +1,30 @@
 package EssGUI;
 
-import java.awt.Dialog;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.TreeSet;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import EssIO.AthleteIO;
 import EssIO.DataStore;
-import EssIO.ObjectIO;
 import EssObject.Athlete;
 
-public class AthleteInformationFrame extends JFrame implements ActionListener{
+public class AthleteInformationDialog extends JDialog implements ActionListener{
 	GridBagConstraints GBC = new GridBagConstraints();
 	GridBagLayout GBL = new GridBagLayout();
 	String countryName;
 	String teamName;
 	DataStore dataStore;
 	Athlete athlete;
+	JPanel mainPanel = new JPanel();
 	
 	JTextField nameTextField;
 	JTextField ageTextField;
@@ -41,7 +37,7 @@ public class AthleteInformationFrame extends JFrame implements ActionListener{
 	JButton confirmJButton;
 	JButton cancelJButton;
 	
-	public AthleteInformationFrame(DataStore dataStore ,String countryName , String teamName , Athlete athlete ,Boolean editable){
+	public AthleteInformationDialog(DataStore dataStore ,String countryName , String teamName , Athlete athlete ,Boolean editable){
 		/*傳入參考*/
 		this.dataStore = dataStore;
 		this.athlete = athlete;
@@ -56,95 +52,98 @@ public class AthleteInformationFrame extends JFrame implements ActionListener{
 				   (scr_size.height - this.getHeight()) / 2);
 		
 		/*視窗設定*/
+		
 		this.setTitle("選手資訊");
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		this.setVisible(true);
-		this.setLayout(GBL);
+		mainPanel.setLayout(GBL);
+		this.add(mainPanel);
+		this.setModal(true);
+		
 		
 		/*視窗元件*/
 		
 		/**姓名**/
 		setGBC(0);
 		JLabel nameJLabel = new JLabel("姓名 : ",SwingConstants.CENTER);
-		this.add(nameJLabel);
+		mainPanel.add(nameJLabel);
 		GBL.setConstraints(nameJLabel, GBC);
 		
 		setGBC(1);
 		nameTextField = new JTextField();
-		this.add(nameTextField);
+		mainPanel.add(nameTextField);
 		nameTextField.setEditable(editable);
 		GBL.setConstraints(nameTextField, GBC);
 		
 		/**性別**/
 		setGBC(0);
 		JLabel genderJLabel = new JLabel("性別 : ",SwingConstants.CENTER);
-		this.add(genderJLabel);
+		mainPanel.add(genderJLabel);
 		GBL.setConstraints(genderJLabel, GBC);
 		
 		setGBC(1);
 		genderTextField = new JTextField();
-		this.add(genderTextField);
+		mainPanel.add(genderTextField);
 		genderTextField.setEditable(editable);
 		GBL.setConstraints(genderTextField, GBC);
 		
 		/**年齡**/
 		setGBC(0);
 		JLabel ageJLabel = new JLabel("年齡 : ",SwingConstants.CENTER);
-		this.add(ageJLabel);
+		mainPanel.add(ageJLabel);
 		GBL.setConstraints(ageJLabel, GBC);
 		
 		setGBC(1);
 		ageTextField = new JTextField();
-		this.add(ageTextField);
+		mainPanel.add(ageTextField);
 		ageTextField.setEditable(editable);
 		GBL.setConstraints(ageTextField, GBC);
 		
 		/**職業**/
 		setGBC(0);
 		JLabel professionJLabel = new JLabel("職業 : ",SwingConstants.CENTER);
-		this.add(professionJLabel);
+		mainPanel.add(professionJLabel);
 		GBL.setConstraints(professionJLabel, GBC);
 		
 		setGBC(1);
 		professionTextField = new JTextField();
-		this.add(professionTextField);
+		mainPanel.add(professionTextField);
 		professionTextField.setEditable(editable);
 		GBL.setConstraints(professionTextField, GBC);
 		
 		/**身高**/
 		setGBC(0);
 		JLabel heightJLabel = new JLabel("身高 : ",SwingConstants.CENTER);
-		this.add(heightJLabel);
+		mainPanel.add(heightJLabel);
 		GBL.setConstraints(heightJLabel, GBC);
 		
 		setGBC(1);
 		heightTextField = new JTextField();
-		this.add(heightTextField);
+		mainPanel.add(heightTextField);
 		heightTextField.setEditable(editable);
 		GBL.setConstraints(heightTextField, GBC);
 		
 		/**體重**/
 		setGBC(0);
 		JLabel weightJLabel = new JLabel("體重 : ",SwingConstants.CENTER);
-		this.add(weightJLabel);
+		mainPanel.add(weightJLabel);
 		GBL.setConstraints(weightJLabel, GBC);
 		
 		setGBC(1);
 		weightTextField = new JTextField();
-		this.add(weightTextField);
+		mainPanel.add(weightTextField);
 		weightTextField.setEditable(editable);
 		GBL.setConstraints(weightTextField, GBC);
 		
 		/**國籍**/
 		setGBC(0);
 		JLabel countryJLabel = new JLabel("國籍 : ",SwingConstants.CENTER);
-		this.add(countryJLabel);
+		mainPanel.add(countryJLabel);
 		GBL.setConstraints(countryJLabel, GBC);
 		
 		setGBC(1);
 		countryTextField = new JTextField();
-		this.add(countryTextField);
+		mainPanel.add(countryTextField);
 		countryTextField.setEditable(editable);
 		GBL.setConstraints(countryTextField, GBC);
 		
@@ -154,7 +153,7 @@ public class AthleteInformationFrame extends JFrame implements ActionListener{
 		/**按鈕**/
 		setGBC(2);
 		JPanel buttonJPanel = new JPanel(GBL);
-		this.add(buttonJPanel);
+		mainPanel.add(buttonJPanel);
 		GBL.setConstraints(buttonJPanel, GBC);
 		
 		setGBC(0);
@@ -177,6 +176,9 @@ public class AthleteInformationFrame extends JFrame implements ActionListener{
 		cancelJButton.setEnabled(editable);
 		buttonJPanel.add(cancelJButton);
 		GBL.setConstraints(cancelJButton, GBC);
+		
+		/*開啟*/
+		this.setVisible(true);
 	}
 	
 	/*初始化欄位*/

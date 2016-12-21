@@ -2,6 +2,9 @@
 import java.util.ArrayList;
 import java.util.TreeSet;
 
+import javax.swing.JButton;
+import javax.swing.JDialog;
+
 import EssGUI.*;
 import EssIO.*;
 import EssObject.*;
@@ -119,6 +122,7 @@ public class MainWindow {
 		ES.addEvent("棒球", 2016, 12, 14, 10, 0, "棒球場A", "台灣", "聖多美普林西比");
 		new EventScheduleIO().write(ES);
 		MainFrame MF = new MainFrame();
+		
 		
 		System.out.println("finish");
 	}

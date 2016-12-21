@@ -34,7 +34,7 @@ import EssObject.Athlete;
 import EssObject.Country;
 import EssObject.Team;
 
-public class AddPanel extends JPanel implements ActionListener , WindowListener{
+public class AddPanel extends JPanel implements ActionListener {
 	DataStore dataStore;
 	GridBagConstraints gridBagConstraints = new GridBagConstraints();
 	GridBagLayout gridBagLayout = new GridBagLayout();
@@ -221,7 +221,9 @@ public class AddPanel extends JPanel implements ActionListener , WindowListener{
 								 if(j.getName().equals(teamJList.getSelectedValue())){
 									 for(Athlete k : j.getAthlete()){
 										 if(k.getName().equals(athleteJList.getSelectedValue())){
-											 new AthleteInformationFrame(dataStore, i.getName(), j.getName(), k ,false);
+											 new AthleteInformationDialog(dataStore, i.getName(), j.getName(), k ,false);
+											 refreshAthleteJList();
+											 break;
 										 }
 									 }
 								 }
@@ -348,10 +350,10 @@ public class AddPanel extends JPanel implements ActionListener , WindowListener{
 			break;
 		case"+選手":
 			if(selectCountry != null && selectTeam!= null){
-				JFrame athleteInformationFrame = new AthleteInformationFrame(dataStore, selectCountry, selectTeam
+				new AthleteInformationDialog(dataStore, selectCountry, selectTeam
 						, new Athlete("", "", 0, selectTeam, 0, 0, selectCountry, null, null)
 						, true);
-				athleteInformationFrame.addWindowListener(this);
+				refreshAthleteJList();
 			}
 			else if(selectCountry == null){
 				JOptionPane.showMessageDialog(null, "請選擇國家");
@@ -391,20 +393,7 @@ public class AddPanel extends JPanel implements ActionListener , WindowListener{
 		}
 	}
 
-	@Override
-	public void windowOpened(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void windowClosing(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void windowClosed(WindowEvent e) {
+	private void refreshAthleteJList(){
 		TreeSet<Athlete> athleteSet = dataStore.getReference(countryJList.getSelectedValue(), teamJList.getSelectedValue()).getAthlete();
 		String[] athleteArray = new String[athleteSet.size()];
 		int athletetemp = 0;
@@ -414,29 +403,5 @@ public class AddPanel extends JPanel implements ActionListener , WindowListener{
 		cleenAthleteJList();
 		athleteJList.setListData(athleteArray);
 	}
-
-	@Override
-	public void windowIconified(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void windowDeiconified(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void windowActivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void windowDeactivated(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	
 }
