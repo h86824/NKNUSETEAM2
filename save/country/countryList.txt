@@ -1,4 +1,4 @@
-﻿name=台灣
+name=台灣
 name=史瓦濟蘭
 name=布吉納法索
 name=聖多美普林西比
