@@ -16,15 +16,16 @@ import EssObject.Event;
 import EssProcess.RandomScheduleBuilder;
 
 public class MainFrame extends JFrame implements ActionListener {
-	RandomScheduleBuilder RSB;
-	JPanel mainPanel = new JPanel();
-	JPanel openPanel = new JPanel();
-	EventSchedule ES;
-	DataStore dataStore = new DataStore();
-	JPanel titlePanel = new JPanel();
-	JLabel title;
-	GridBagConstraints GBC = new GridBagConstraints();
-	GridBagLayout GBL = new GridBagLayout();
+	private RandomScheduleBuilder RSB;
+	private JPanel mainPanel = new JPanel();
+	private JPanel openPanel = new JPanel();
+	private EventSchedule ES;
+	private DataStore dataStore = new DataStore();
+	private JPanel titlePanel = new JPanel();
+	private JLabel title;
+	private GridBagConstraints GBC = new GridBagConstraints();
+	private GridBagLayout GBL = new GridBagLayout();
+	
 	public MainFrame(){	
 		setRandomScheduleBuilder();
 		replanSchedule();
@@ -49,9 +50,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		setMainPanel();
 		
 		/*標題欄位*/
-		GBC.insets = new Insets(10,10,10,10);
-		GBC.ipadx = 0;
-		GBC.ipady = 9;
+		GBC.insets = new Insets(8,8,8,8);
+		GBC.ipadx = 10;
+		GBC.ipady = 1;
 		GBC.gridheight = 1;
 		GBC.gridwidth = 0;
 		GBC.weightx = 1.0;
@@ -63,10 +64,10 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		/*主按鈕欄位*/
 		GBL.setConstraints(titlePanel, GBC);
-		GBC.gridheight = 8;
+		GBC.gridheight = 10;
 		GBC.gridwidth = 1;
 		GBC.weightx = 0;
-		GBC.weighty = 0.2;
+		GBC.weighty = 1;
 		GBC.fill = GridBagConstraints.BOTH;
 		this.getContentPane().add(mainPanel);
 		GBL.setConstraints(mainPanel, GBC);
@@ -75,7 +76,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		GBC.gridheight = 0;
 		GBC.gridwidth = 10;
 		GBC.weightx = 1.0;
-		GBC.weighty = 0.8;
+		GBC.weighty = 1;
 		openPanel.setLayout(GBL);
 		openPanel.setBackground(Color.PINK);
 		this.getContentPane().add(openPanel);

@@ -35,12 +35,12 @@ import EssObject.Country;
 import EssObject.Team;
 
 public class AddPanel extends JPanel implements ActionListener {
-	DataStore dataStore;
-	GridBagConstraints gridBagConstraints = new GridBagConstraints();
-	GridBagLayout gridBagLayout = new GridBagLayout();
-	JList<String> countryJList;
-	JList<String> teamJList;
-	JList<String> athleteJList;
+	private DataStore dataStore;
+	private GridBagConstraints gridBagConstraints = new GridBagConstraints();
+	private GridBagLayout gridBagLayout = new GridBagLayout();
+	private JList<String> countryJList;
+	private JList<String> teamJList;
+	private JList<String> athleteJList;
 	
 	public AddPanel(DataStore dataStore){
 		this.dataStore = dataStore;
@@ -257,7 +257,7 @@ public class AddPanel extends JPanel implements ActionListener {
 		switch(e.getActionCommand()){
 		case"+國家":
 			String country = JOptionPane.showInputDialog("請輸入國家名稱：");
-			if(country!=null){
+			if(country!=null && !country.equals("")){
 				dataStore.addCountry(country);
 				
 				String[] countryList = new String[dataStore.getCountry().size()];
@@ -298,7 +298,7 @@ public class AddPanel extends JPanel implements ActionListener {
 		case"+隊伍":
 			if(selectCountry != null){
 				String teamName = JOptionPane.showInputDialog("請輸入隊伍名稱：");
-				if(teamName!=null){
+				if(teamName!=null && !teamName.equals("")){
 					dataStore.addTeam(selectCountry, teamName);
 					cleenTeamJList();
 					for(Country i : dataStore.getCountry()){
