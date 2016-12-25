@@ -195,7 +195,11 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 	private void setOpenPanelSearch() {
 		openPanel.removeAll();
-		JPanel panel =new SearchPanel();
+		GBC.gridheight = 10;
+		GBC.gridwidth = 10;
+		GBC.weightx = 1;
+		GBC.weighty = 1;
+		JPanel panel = new SearchPanel(dataStore);
 		openPanel.add(panel);
 		GBL.setConstraints(panel, GBC);
 		openPanel.updateUI();
