@@ -120,33 +120,37 @@ public class MainFrame extends JFrame implements ActionListener {
 		GBC.fill = GridBagConstraints.BOTH;
 		
 		/*讀取Schedule*/
-		TreeSet<Event> ESSet = dataStore.getEventSchedule().getEvents();
+		TreeSet<EventSchedule> ESSet = dataStore.getEventSchedule();
 		JPanel panel = new JPanel();
 		panel.setLayout(GBL);
-		for(Event i : ESSet){
-			JLabel timeJLabel = new JLabel(i.getTime().toString());
-			//Label layout
-			GBC.gridheight = 1;
-			GBC.gridwidth = 2;
-			GBC.weightx = 0;
-			GBC.weighty = 0;
-			GBC.insets = new Insets(10,0,0,15);
-			GBC.fill = GridBagConstraints.BOTH;
-			panel.add(timeJLabel);
-			GBL.setConstraints(timeJLabel, GBC);
+		for(EventSchedule j: ESSet){
 			
-			JLabel teamAJLabel = new JLabel(i.getTeamA());
-			panel.add(teamAJLabel);
-			GBL.setConstraints(teamAJLabel, GBC);
+			for(Event i :j. getEvents()){
+				JLabel timeJLabel = new JLabel(i.getTime().toString());
+				//Label layout
+				GBC.gridheight = 1;
+				GBC.gridwidth = 2;
+				GBC.weightx = 0;
+				GBC.weighty = 0;
+				GBC.insets = new Insets(10,0,0,15);
+				GBC.fill = GridBagConstraints.BOTH;
+				panel.add(timeJLabel);
+				GBL.setConstraints(timeJLabel, GBC);
+				
+				JLabel teamAJLabel = new JLabel(i.getTeamA());
+				panel.add(teamAJLabel);
+				GBL.setConstraints(teamAJLabel, GBC);
+				
+				JLabel markJLabel = new JLabel(":");
+				panel.add(markJLabel);
+				GBL.setConstraints(markJLabel, GBC);
+				
+				JLabel teamBJLabel = new JLabel(i.getTeamB());
+				GBC.gridwidth = 0;
+				panel.add(teamBJLabel);
+				GBL.setConstraints(teamBJLabel, GBC);
+			}
 			
-			JLabel markJLabel = new JLabel(":");
-			panel.add(markJLabel);
-			GBL.setConstraints(markJLabel, GBC);
-			
-			JLabel teamBJLabel = new JLabel(i.getTeamB());
-			GBC.gridwidth = 0;
-			panel.add(teamBJLabel);
-			GBL.setConstraints(teamBJLabel, GBC);
 		}
 		
 		//加入openPanel
@@ -163,8 +167,17 @@ public class MainFrame extends JFrame implements ActionListener {
 	
 	/*設定重新排列選項*/
 	private void setOpenPanelReplan() {
-		replanSchedule();
-		setOpenPanelShowSchedule();
+		//replanSchedule();
+		//setOpenPanelShowSchedule();
+		GBC.gridheight = 10;
+		GBC.gridwidth = 10;
+		GBC.weightx = 1;
+		GBC.weighty = 1;
+		openPanel.removeAll();
+		JPanel editSchedulePanel = new EditSchedulePanel(dataStore);
+		openPanel.add(editSchedulePanel);
+		GBL.setConstraints(editSchedulePanel, GBC);
+		openPanel.updateUI();
 	}
 	
 	/*按鈕三Panel*/
@@ -232,10 +245,8 @@ public class MainFrame extends JFrame implements ActionListener {
 	
 	/*重新安排賽程*/
 	private void replanSchedule(){
-		dataStore.setEvnetSchedule(RSB.getSchedule());
-		for(Event i : dataStore.getEventSchedule().getEvents()){
-			System.out.println(i);
-		}
+		
+		
 	}
 	
 	/*設定全域UI字形*/

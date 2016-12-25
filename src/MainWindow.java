@@ -107,6 +107,24 @@ public class MainWindow {
 		teamSet.add(new Team(BALL, athleteSet, null));
 		ObjIO.write(teamSet);
 		
+		
+		
+		TreeSet<EventSchedule> ESset = new TreeSet<EventSchedule>();
+		EventSchedule ES = new EventSchedule("棒球八強" ,"棒球");
+		System.out.println("project" + ES.getProject());
+		ES.addEvent(2016, 12, 14, 8, 0, "棒球場A", "台灣", "布吉納法索");
+		ES.addEvent(2016, 12, 14, 9, 0, "棒球場A", "聖多美普林西比", "布吉納法索");
+		ES.addEvent(2016, 12, 14, 10, 0, "棒球場A", "台灣", "聖多美普林西比");
+		ESset.add(ES);
+		new EventScheduleIO().write(ESset);
+		
+		EventSchedule ES2 = new EventSchedule("棒球四強" ,"棒球");
+		ES2.addEvent(2016, 12, 14, 8, 0, "棒球場A", "台灣", "布吉納法索");
+		ES2.addEvent(2016, 12, 14, 9, 0, "棒球場A", "聖多美普林西比", "布吉納法索");
+		ES2.addEvent(2016, 12, 14, 10, 0, "棒球場A", "台灣", "聖多美普林西比");
+		ESset.add(ES2);
+		new EventScheduleIO().write(ESset);
+		
 		DataStore DS = new DataStore();
 		for(Country country : DS.countrySet){
 			for(Team team : country.getTeam()){
@@ -116,13 +134,13 @@ public class MainWindow {
 			}
 		}
 		
-		EventSchedule ES = new EventSchedule();
-		ES.addEvent("棒球", 2016, 12, 14, 8, 0, "棒球場A", "台灣", "布吉納法索");
-		ES.addEvent("棒球", 2016, 12, 14, 9, 0, "棒球場A", "聖多美普林西比", "布吉納法索");
-		ES.addEvent("棒球", 2016, 12, 14, 10, 0, "棒球場A", "台灣", "聖多美普林西比");
-		new EventScheduleIO().write(ES);
-		MainFrame MF = new MainFrame();
+		System.out.println(new EventScheduleIO().read().size());
+		for(EventSchedule i : new EventScheduleIO().read()){
+			System.out.println(i.getName());
+		}
 		
+		MainFrame MF = new MainFrame();
+		//JDialog addEventScheduleDialog = new AddEventScheduleDialog(new DataStore());
 		
 		System.out.println("finish");
 	}

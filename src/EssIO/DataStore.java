@@ -5,7 +5,7 @@ import EssObject.*;
 
 public class DataStore {
 	public TreeSet<Country> countrySet;
-	public EventSchedule eventSchedule;
+	public TreeSet<EventSchedule> eventScheduleSet;
 	
 	public DataStore(){
 		readCountry();
@@ -14,12 +14,12 @@ public class DataStore {
 		readEventSchedule();
 	}
 	
-	public EventSchedule getEventSchedule(){
-		return eventSchedule;
+	public TreeSet<EventSchedule> getEventSchedule(){
+		return eventScheduleSet;
 	}
 	
-	public void setEvnetSchedule(EventSchedule eventSchedule){
-		this.eventSchedule = eventSchedule;
+	public void setEvnetSchedule(TreeSet<EventSchedule> eventScheduleSet){
+		this.eventScheduleSet = eventScheduleSet;
 	}
 	
 	public TreeSet<Country> getCountry(){
@@ -53,7 +53,7 @@ public class DataStore {
 	}
 	
 	private void readEventSchedule(){
-		eventSchedule = new EventScheduleIO().read();
+		eventScheduleSet = new EventScheduleIO().read();
 	}
 	
 	public void addCountry(String countryName){
@@ -136,6 +136,20 @@ public class DataStore {
 		readCountry();
 		readTeam();
 		readAthlete();
+	}
+	
+	public void addEventSchedule(EventSchedule eventSchedule){
+		eventScheduleSet.add(eventSchedule);
+		ObjectIO<EventSchedule> eventScheduleIO = new EventScheduleIO();
+		eventScheduleIO.write(eventScheduleSet);
+		readEventSchedule();
+	}
+	
+	public void deleteEventSchedule(EventSchedule eventSchedule){
+		eventScheduleSet.remove(eventSchedule);
+		ObjectIO<EventSchedule> eventScheduleIO = new EventScheduleIO();
+		eventScheduleIO.write(eventScheduleSet);
+		readEventSchedule();
 	}
 	
 	/*取得參考*/

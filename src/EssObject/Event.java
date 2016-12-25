@@ -5,45 +5,50 @@ package EssObject;
  *
  */
 public class Event implements Comparable<Event>{
-	private String name;
 	private Time time;
 	private String site;
 	private String teamA;
 	private String teamB;
-	public Event(String name ,int year, int month, int day, int hour,int minute, String site, String teamA ,String teamB){
+	public Event(int year, int month, int day, int hour,int minute, String site, String teamA ,String teamB){
 		time = new Time(year , month , day , hour , minute);
-		this.name = name;
 		this.site = site;
 		this.teamA = teamA;
 		this.teamB = teamB;
 	}
 	
-	public Event(String name ,Time time, String site, String teamA, String teamB){
-		this.name = name;
+	public Event(Time time, String site, String teamA, String teamB){
 		this.time = time;
 		this.site = site;
 		this.teamA = teamA;
 		this.teamB = teamB;
 	}
 	
-	public String getName(){
-		return name;
-	}
-	
-	public void setName(String name){
-		this.name = name;
+	public void setTime(Time time){
+		this.time = time;
 	}
 	
 	public Time getTime(){
 		return time;
 	}
 	
+	public void setSite(String site){
+		this.site = site;
+	}
+	
 	public String getSite(){
 		return site;
 	}
 	
+	public void setTeaA(String teamA){
+		this.teamA = teamA;
+	}
+	
 	public String getTeamA(){
 		return teamA;
+	}
+	
+	public void setTeaB(String teamB){
+		this.teamB = teamB;
 	}
 	
 	public String getTeamB(){
