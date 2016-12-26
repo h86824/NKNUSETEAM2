@@ -2,6 +2,7 @@ package EssIO;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -39,7 +40,7 @@ public class EventScheduleIO implements ObjectIO<EventSchedule>{
 			EventSchedule eventSechedule = new EventSchedule(name ,project);
 			Scanner eventInput = null;
 			try {
-				eventInput = new Scanner(new BufferedReader(new InputStreamReader(new FileInputStream(filePath+"_"+name+".txt") ,"UTF-8")));
+				eventInput = new Scanner(new BufferedReader(new InputStreamReader(new FileInputStream(filePath+"_"+project+"_"+name+".txt") ,"UTF-8")));
 			} catch (UnsupportedEncodingException | FileNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -78,7 +79,7 @@ public class EventScheduleIO implements ObjectIO<EventSchedule>{
 				
 				BufferedWriter evneOut = null;
 				try {
-					evneOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath+"_"+eventSchedule.getName()+".txt") ,"UTF-8"));
+					evneOut = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath+"_"+eventSchedule.getProject()+"_"+eventSchedule.getName()+".txt") ,"UTF-8"));
 				}
 				catch (UnsupportedEncodingException | FileNotFoundException e) {
 					e.printStackTrace();
@@ -103,6 +104,10 @@ public class EventScheduleIO implements ObjectIO<EventSchedule>{
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void delete(EventSchedule eventSchedule){
+		new File(filePath+"_" + eventSchedule.getProject() + "_" + eventSchedule.getName() +".txt").delete();
 	}
 	
 }

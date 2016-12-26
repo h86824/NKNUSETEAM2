@@ -58,7 +58,7 @@ public class AddEventScheduleDialog extends JDialog implements ActionListener{
 	private JButton addEventJButton;
 	private JPanel eventsPanel;
 	private JLabel unpickJLabel;
-	private JLabel pickedJLabel;
+	private JLabel pickedJLabel =new JLabel("已選擇(0)",0);
 	private JPanel optionPanel;
 	private JButton enterJButton;
 	private JButton cancelJButton;
@@ -97,7 +97,6 @@ public class AddEventScheduleDialog extends JDialog implements ActionListener{
 		
 		listLabelPanel = new JPanel(new GridLayout(1,2));
 		unpickJLabel = new JLabel("未選擇",0);
-		pickedJLabel = new JLabel("已選擇",0);
 		listLabelPanel.add(unpickJLabel);
 		listLabelPanel.add(pickedJLabel);
 		
@@ -167,6 +166,7 @@ public class AddEventScheduleDialog extends JDialog implements ActionListener{
 	public void setEvent(EventSchedule eventSchedule){
 		nameJTextField.setText(eventSchedule.getName());
 		projectJComboBox.setSelectedItem(eventSchedule.getProject());
+		projectJComboBox.enable(false);
 		projectJComboBox.setEditable(false);
 		eventsPanel.removeAll();
 		eventSet = eventSchedule.getEvents();
@@ -398,6 +398,8 @@ public class AddEventScheduleDialog extends JDialog implements ActionListener{
 		}
 		else if(e.getSource().getClass() == new JComboBox<String>().getClass()){
 			String project = (String)((JComboBox<String>)e.getSource()).getSelectedItem();
+			pickedJlistModel.removeAllElements();
+			pickedJLabel.setText("已選擇(0)");
 			unpickJlistModel.removeAllElements();
 			for(Country i : dataStore.getCountry()){
 				for(Team j : i.getTeam()){

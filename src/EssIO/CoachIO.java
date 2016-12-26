@@ -70,5 +70,11 @@ public class CoachIO implements ObjectIO<Coach>{
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public void delete(Coach t) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

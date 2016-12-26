@@ -63,4 +63,10 @@ public class DeviceIO implements ObjectIO<Device>{
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public void delete(Device t) {
+		// TODO Auto-generated method stub
+		
+	}
 }

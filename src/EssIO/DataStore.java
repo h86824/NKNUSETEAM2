@@ -107,6 +107,7 @@ public class DataStore {
 						tempTeam.remove(j);
 						i.setTeam(tempTeam);
 						teamIO.write(tempTeam);
+						teamIO.delete(j);
 						break;
 					}
 				}
@@ -149,6 +150,7 @@ public class DataStore {
 		eventScheduleSet.remove(eventSchedule);
 		ObjectIO<EventSchedule> eventScheduleIO = new EventScheduleIO();
 		eventScheduleIO.write(eventScheduleSet);
+		eventScheduleIO.delete(eventSchedule);
 		readEventSchedule();
 	}
 	

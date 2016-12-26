@@ -13,10 +13,9 @@ import javax.swing.plaf.FontUIResource;
 import EssIO.DataStore;
 import EssObject.*;
 import EssObject.Event;
-import EssProcess.RandomScheduleBuilder;
+
 
 public class MainFrame extends JFrame implements ActionListener {
-	private RandomScheduleBuilder RSB;
 	private JPanel mainPanel = new JPanel();
 	private JPanel openPanel = new JPanel();
 	private EventSchedule ES;
@@ -244,7 +243,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		timeSet.add(new Time(2016, 12, 15, 12, 00));
 		timeSet.add(new Time(2016, 12, 15, 12, 30));
 		timeSet.add(new Time(2016, 12, 15, 13, 00));
-		RSB = new RandomScheduleBuilder(teamSet, timeSet);
+		
 	}
 	
 	/*重新安排賽程*/

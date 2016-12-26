@@ -376,6 +376,10 @@ public class EditSchedulePanel extends JPanel implements ActionListener{
 			updateUI();
 			break;
 		case "編輯賽程":
+			if(scheduleJList.getSelectedValue() == null){
+				JOptionPane.showMessageDialog(null, "請選擇賽程");
+				break;
+			}
 			for(EventSchedule i : dataStore.getEventSchedule()){
 				if(i.getProject().equals(projectJList.getSelectedValue()) && i.getName().equals(scheduleJList.getSelectedValue())){
 					new AddEventScheduleDialog(dataStore, i);

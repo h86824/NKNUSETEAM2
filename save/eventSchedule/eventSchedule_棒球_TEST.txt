@@ -1,0 +1,16 @@
+year=1
+month=1
+day=1
+hour=1
+minute=1
+site=1
+teamA=台灣
+teamB=史瓦濟蘭
+year=2
+month=2
+day=2
+hour=2
+minute=2
+site=2
+teamA=布吉納法索
+teamB=聖多美普林西比

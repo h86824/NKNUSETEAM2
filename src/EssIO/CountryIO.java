@@ -61,4 +61,10 @@ public class CountryIO implements ObjectIO<Country>{
 		return returnSet;
 	}
 
+	@Override
+	public void delete(Country t) {
+		
+		
+	}
+
 }

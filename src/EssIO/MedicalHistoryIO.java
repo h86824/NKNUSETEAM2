@@ -45,4 +45,10 @@ public class MedicalHistoryIO implements ObjectIO<MedicalHistory>{
 		}
 	}
 
+	@Override
+	public void delete(MedicalHistory t) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

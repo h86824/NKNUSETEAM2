@@ -69,4 +69,9 @@ public class TeamIO implements ObjectIO<Team>{
 		}
 	}
 
+	@Override
+	public void delete(Team t) {
+		new File(filePath.substring(0, filePath.length() - 1 - 8) + "_" + t.getName() +"_Athlete.txt").delete();
+	}
+
 }

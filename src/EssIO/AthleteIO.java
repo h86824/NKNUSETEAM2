@@ -80,5 +80,11 @@ public class AthleteIO implements ObjectIO<Athlete>{
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public void delete(Athlete t) {
+		new File(filePath).delete();
+		
+	}
 	
 }

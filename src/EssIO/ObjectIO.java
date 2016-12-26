@@ -14,4 +14,6 @@ public interface ObjectIO<T>{
 	public TreeSet<T> read();
 	/*儲存檔案方法*/
 	public void write(TreeSet<T> inputSet);
+	/*删除檔案*/
+	public void delete(T t);
 }
