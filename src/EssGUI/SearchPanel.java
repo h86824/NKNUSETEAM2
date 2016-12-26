@@ -1,5 +1,8 @@
 package EssGUI;
-
+import javax.swing.*;
+import javax.swing.event.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -13,28 +16,21 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.WindowAdapter;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-
 import EssIO.DataStore;
+import EssObject.Athlete;
 import EssObject.Country;
+import EssObject.Team;
 
-
-public class SearchPanel extends JPanel implements ActionListener{
+public class SearchPanel extends JPanel implements ActionListener,ListSelectionListener{
 	JLabel jLabel = new JLabel();
 	JLabel jLabel1 = new JLabel();
 	JComboBox<String> box= new JComboBox<String>(); 
 	JTextField field = new JTextField();
+	JList<Athlete> jl =new JList<Athlete>();
 	DataStore dataStore;
 	JTextArea jTextArea2= new JTextArea();
-	
-	
+	DefaultListModel<Athlete> dlm = new DefaultListModel<Athlete>();
+
 	
 	public SearchPanel(DataStore dataStore){
 		this.dataStore=dataStore;
@@ -100,8 +96,8 @@ public class SearchPanel extends JPanel implements ActionListener{
 		 
 		
 		
-		String[] city={"北京                                                             ","上海","長沙","深圳","南京"};
-		JList<String> jl =new JList<String>(city);
+		
+		
 		G.insets=new Insets(0,10,10,10);
 		G.gridwidth = 4;
         G.gridheight = 10;
@@ -122,56 +118,56 @@ public class SearchPanel extends JPanel implements ActionListener{
         G.anchor = GridBagConstraints.WEST;
         this.add(jTextArea2,G);
         jTextArea2.setBackground(SystemColor.WHITE);
-		
+        jl.addListSelectionListener(this);
 	}
 	
-		
- 
-
-
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		jTextArea2.setText("");
+		Athlete a =  jl.getSelectedValue();
+		jTextArea2.setText("姓名:"+a.getName()+"\r\n國家:"+a.getCountry()+"\r\n職業:"+a.getProfession()+"\r\n性別:"+a.getGender()+"\r\n年齡:"+a.getAge()+"\r\n身高:"+a.getHeight()+"\r\n體重:"+a.getWeight());
+	}
+	
 	@Override
 	
 	public void actionPerformed(ActionEvent arg0) {
+		jTextArea2.setText("");
 		String returnStr[] = new String[2];
-		box.getSelectedItem().toString(); 
 		returnStr[0]=box.getSelectedItem().toString();
 		returnStr[1]=field.getText();
-		new massage(returnStr);
-		
-		jTextArea2.setText("國家:"+"\r\n"+"名字:");
-		System.out.println(returnStr[1]);
-	}
-	
-	
-}
-class massage extends JFrame{
-	JLabel jLabel = new JLabel();
-	JTextArea jTextArea1 = new JTextArea();
-	JPanel Pan=new JPanel(null); 
-	public massage(String [] a){
-		JButton jb = new JButton("查詢");
-		Container c = getContentPane(); 
-		c = this.getContentPane(); 
-		this.setTitle("查詢結果");
-		c.setLayout(new GridLayout(1, 1));
-		setSize(400,300);
-		setLocation(200,120); 
-		setVisible(true);
-		
-		
-		jTextArea1.setBackground(SystemColor.control);
-		jTextArea1.setText("國家:"+a[0]+"\r\n"+"名字:"+a[1]);
-		c.add(jTextArea1);
+		dlm.clear();
+	    jl.setModel(dlm);
+		int count=0;
+		for(Country i : dataStore.getCountry()){
+			if(i.getName().equals(returnStr[0])){
+				for(Team t: i.getTeam()){
+					for(Athlete a: t.getAthlete()){
+						if(a.getName().equals(returnStr[1])){
+							dlm.addElement(a);
+							count++;
+						}
+					}
+				}
+			}
+		}
+		jl.setModel(dlm);
+		if(count==0){
+			jTextArea2.setText("無此選手");
+		}
 		
 		
 		
 	}
 	
 	
-	
-	
-	
 }
+
+	
+	
+	
+	
+	
+
 
 
 
