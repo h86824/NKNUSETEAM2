@@ -170,12 +170,20 @@ public class AddEventScheduleDialog extends JDialog implements ActionListener{
 		projectJComboBox.setEditable(false);
 		eventsPanel.removeAll();
 		eventSet = eventSchedule.getEvents();
+		TreeSet<String> pickedSet = new TreeSet<String>();
 		for(Event i : eventSet){
+			pickedSet.add(i.getTeamA());
+			pickedSet.add(i.getTeamB());
 			JPanel panel = new EventsPanel(i, this);
 			setGBC(0);
 			eventsPanel.add(panel);
 			GBL.setConstraints(panel, GBC);
 		}
+		for(String i : pickedSet){
+			pickedJlistModel.addElement(i);
+			unpickJlistModel.removeElement(i);
+		}
+		pickedJLabel.setText("已選擇("+pickedJlistModel.size()+")");
 	}
 		
 	private class EventsPanel extends JPanel{
