@@ -266,6 +266,9 @@ public class EditSchedulePanel extends JPanel implements ActionListener{
 					updateUI();
 				}
 			}
+			if(projectSelect == null){
+				((ScheduleInformationPanel) scheduleInformationPanel).setEvent(new EventSchedule("",""));
+			}
 		}
 	}
 	
@@ -317,6 +320,9 @@ public class EditSchedulePanel extends JPanel implements ActionListener{
 			this.add(eventsJScrollPane);
 			setGBC(9);
 			GBL.setConstraints(eventsJScrollPane, GBC);
+			
+			nameJTextField.setEditable(false);
+			projectTextField.setEditable(false);
 		}
 		
 		public ScheduleInformationPanel(EventSchedule eventSchedule){
@@ -396,20 +402,22 @@ public class EditSchedulePanel extends JPanel implements ActionListener{
 	}
 	
 	private void deleteSchedule(){
-		if(projectJList.getSelectedValue()==null){
+		String projectSelectValue = projectJList.getSelectedValue();
+		String scheduleSelectValue = scheduleJList.getSelectedValue();
+		if(projectSelectValue==null){
 			JOptionPane.showMessageDialog(null,"請選擇比賽");
 			return;
 		}
-		if(scheduleJList.getSelectedValue()==null){
+		if(scheduleSelectValue==null){
 			JOptionPane.showMessageDialog(null,"請選擇賽程");
 			return;
 		}
 		int result = JOptionPane.showConfirmDialog(null, "確定要刪除\"" + scheduleJList.getSelectedValue() + "\"嗎？" , "警告",JOptionPane.YES_NO_OPTION);
 		if(result == 1)
 			return;
-		System.out.println(projectJList.getSelectedValue());
+		System.out.println(projectSelectValue);
 		for(EventSchedule i : dataStore.getEventSchedule()){
-			if(i.getProject().equals(projectJList.getSelectedValue()) && i.getName().equals(scheduleJList.getSelectedValue())){
+			if(i.getProject().equals(projectSelectValue) && i.getName().equals(scheduleSelectValue)){
 				System.out.println("remove" + i.getName());
 				dataStore.deleteEventSchedule(i);
 				TreeSet<String> projectSet = new TreeSet<String>();
@@ -419,15 +427,28 @@ public class EditSchedulePanel extends JPanel implements ActionListener{
 				projectJList.setListData((String[])projectSet.toArray(new String[projectSet.size()]));
 				scheduletModel.removeElement(i.getName());
 				updateUI();
+				break;
 			}
+		}
+		projectJList.setSelectedValue(projectSelectValue, true);
+		scheduleJList.setSelectedValue(scheduleSelectValue, true);
+		if(scheduleJList.getSelectedIndex() == -1){
+			scheduleJList.setSelectedIndex(0);
 		}
 	}
 	
 	private void updateProjectJList(){
 		TreeSet<String> projectSet = new TreeSet<String>();
+		String projectSelectValue = projectJList.getSelectedValue();
+		String scheduleSelectValue = scheduleJList.getSelectedValue();
 		for(EventSchedule i : dataStore.getEventSchedule()){
 			projectSet.add(i.getProject());
 		}
 		projectJList.setListData((String[])projectSet.toArray(new String[projectSet.size()]));
+		projectJList.setSelectedValue(projectSelectValue, true);
+		scheduleJList.setSelectedValue(scheduleSelectValue, true);
+		if(scheduleJList.getSelectedIndex() == -1){
+			scheduleJList.setSelectedIndex(0);
+		}
 	}
 }

@@ -78,6 +78,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		GBC.weighty = 1;
 		openPanel.setLayout(GBL);
 		openPanel.setBackground(Color.PINK);
+		openPanel.add(new JLabel("歡迎使用，請點擊左方按鈕開始操作"));
 		this.getContentPane().add(openPanel);
 		GBL.setConstraints(openPanel, GBC);
 		

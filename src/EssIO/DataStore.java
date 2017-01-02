@@ -1,4 +1,5 @@
 package EssIO;
+import java.util.Iterator;
 import java.util.TreeSet;
 
 import EssObject.*;
@@ -71,7 +72,11 @@ public class DataStore {
 		ObjectIO<Country> countryIO = new CountryIO();
 		for(Country i : countrySet){
 			if(i.getName().equals(countryName)){
+				for(Team j : i.getTeam().toArray(new Team[i.getTeam().size()])){
+					deleteTeam(countryName, j.getName());
+				}
 				countrySet.remove(i);
+				countryIO.delete(i);
 				break;
 			}
 		}
