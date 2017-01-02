@@ -155,7 +155,7 @@ public class EditSchedulePanel extends JPanel implements ActionListener{
 			GBC.fill = GridBagConstraints.NONE;
 			break;
 		case 2:
-			GBC.insets = new Insets(5,5,0,0);
+			GBC.insets = new Insets(5,5,5,5);
 			GBC.gridheight = 9;
 			GBC.gridwidth = 2;
 			GBC.weightx = 1;
@@ -164,7 +164,7 @@ public class EditSchedulePanel extends JPanel implements ActionListener{
 			GBC.fill = GridBagConstraints.BOTH;
 			break;
 		case 3:
-			GBC.insets = new Insets(5,5,0,0);
+			GBC.insets = new Insets(5,5,5,5);
 			GBC.gridheight = 9;
 			GBC.gridwidth = 6;
 			GBC.weightx = 1;

@@ -8,7 +8,7 @@ import javax.swing.JDialog;
 import EssGUI.*;
 import EssIO.*;
 import EssObject.*;
-import EssProcess.*;
+
 public class MainWindow {
 
 	public static void main(String[] args) {

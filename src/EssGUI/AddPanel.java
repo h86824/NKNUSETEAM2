@@ -364,6 +364,9 @@ public class AddPanel extends JPanel implements ActionListener {
 			break;
 		case"-選手":
 			if(selectCountry != null && selectTeam != null && selectAthlete != null){
+				int result = JOptionPane.showConfirmDialog(null, "確定要刪除\"" + selectAthlete + "\"嗎？" , "警告",JOptionPane.YES_NO_OPTION);
+				if(result != 0)
+					return;
 				TreeSet<Athlete> athleteSet = new TreeSet<Athlete>();
 				Team refTeam = dataStore.getReference(selectCountry, selectTeam);
 				athleteSet = refTeam.getAthlete();

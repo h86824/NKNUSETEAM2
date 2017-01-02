@@ -97,7 +97,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		GBC.insets = new Insets(10,0,0,0);
 		GBC.fill = GridBagConstraints.BOTH;
 		JButton[] button = new JButton[4];
-		String [] buttonStr = {"顯示賽程" , "重新安排賽程" , "調整隊伍","查詢"};
+		String [] buttonStr = {"查詢賽程" , "安排賽程" , "調整隊伍","查詢"};
 		for(int i = 0 ; i < 4 ; i++){
 			button[i] = new JButton(buttonStr[i]);
 			button[i].addActionListener(this);
@@ -108,52 +108,9 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 	
 	/*設定顯示畫面——賽程表*/
-	private void setOpenPanelShowSchedule() {
-		//設定Panel layout
+	private void setOpenPanelShowSchedule(DataStore dataStore){
 		openPanel.removeAll();
-		GBC.gridheight = 1;
-		GBC.gridwidth = 0;
-		GBC.weightx = 0;
-		GBC.weighty = 0;
-		GBC.insets = new Insets(10,10,10,10);
-		GBC.fill = GridBagConstraints.BOTH;
-		
-		/*讀取Schedule*/
-		TreeSet<EventSchedule> ESSet = dataStore.getEventSchedule();
-		JPanel panel = new JPanel();
-		panel.setLayout(GBL);
-		for(EventSchedule j: ESSet){
-			
-			for(Event i :j. getEvents()){
-				JLabel timeJLabel = new JLabel(i.getTime().toString());
-				//Label layout
-				GBC.gridheight = 1;
-				GBC.gridwidth = 2;
-				GBC.weightx = 0;
-				GBC.weighty = 0;
-				GBC.insets = new Insets(10,0,0,15);
-				GBC.fill = GridBagConstraints.BOTH;
-				panel.add(timeJLabel);
-				GBL.setConstraints(timeJLabel, GBC);
-				
-				JLabel teamAJLabel = new JLabel(i.getTeamA());
-				panel.add(teamAJLabel);
-				GBL.setConstraints(teamAJLabel, GBC);
-				
-				JLabel markJLabel = new JLabel(":");
-				panel.add(markJLabel);
-				GBL.setConstraints(markJLabel, GBC);
-				
-				JLabel teamBJLabel = new JLabel(i.getTeamB());
-				GBC.gridwidth = 0;
-				panel.add(teamBJLabel);
-				GBL.setConstraints(teamBJLabel, GBC);
-			}
-			
-		}
-		
-		//加入openPanel
-		GBC.gridheight = 8;
+		JPanel panel = new SchedulePanel(dataStore);
 		GBC.gridwidth = 10;
 		GBC.weightx = 1;
 		GBC.weighty = 1;
@@ -209,22 +166,23 @@ public class MainFrame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		System.out.println("Action Event");
 		switch(e.getActionCommand()){
-		case "顯示賽程":
-			System.out.println("顯示賽程");
-			title.setText("顯示賽程");
-			setOpenPanelShowSchedule();
+		case "查詢賽程":
+			System.out.println("查詢賽程");
+			title.setText(e.getActionCommand());
+			setOpenPanelShowSchedule(dataStore);
 			break;
-		case "重新安排賽程":
-			System.out.println("重新安排賽程");
-			title.setText("顯示賽程");
+		case "安排賽程":
+			System.out.println("安排賽程");
+			title.setText(e.getActionCommand());
 			setOpenPanelReplan();
 			break;
 		case "調整隊伍":
 			System.out.println("press button3");
-			title.setText("新增隊伍");
+			title.setText(e.getActionCommand());
 			setOpenPanelButton3();
 			break;
 		case "查詢":
+			title.setText(e.getActionCommand());
 			setOpenPanelSearch();
 			break;
 		}
