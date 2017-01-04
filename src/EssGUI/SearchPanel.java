@@ -132,7 +132,7 @@ public class SearchPanel extends JPanel implements ActionListener,ListSelectionL
 				
 					for(Team t: i.getTeam()){
 						for(Athlete a: t.getAthlete()){
-							if(a.getName().indexOf(returnStr[1])>0){
+							if(a.getName().indexOf(returnStr[1])>-1){
 								dlm.addElement(a);
 								count++;
 							}
@@ -146,8 +146,10 @@ public class SearchPanel extends JPanel implements ActionListener,ListSelectionL
 				if(i.getName().equals(returnStr[0])){
 					for(Team t: i.getTeam()){
 						for(Athlete a: t.getAthlete()){
-							if(a.getName().indexOf(returnStr[1])>0){
+							System.out.println(a.getName());
+							if(a.getName().indexOf(returnStr[1])>-1){
 								dlm.addElement(a);
+								System.out.println(a.getName());
 								count++;
 							}
 						}
