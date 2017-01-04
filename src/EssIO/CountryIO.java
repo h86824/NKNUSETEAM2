@@ -49,7 +49,17 @@ public class CountryIO implements ObjectIO<Country>{
 			input = new BufferedReader(new InputStreamReader(new FileInputStream(filePath) ,"UTF-8"));
 		} 
 		catch (UnsupportedEncodingException | FileNotFoundException e) {
-			e.printStackTrace();
+			File file = new File(filePath);
+			try {
+				file.createNewFile();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			try {
+				input = new BufferedReader(new InputStreamReader(new FileInputStream(filePath) ,"UTF-8"));
+			} catch (UnsupportedEncodingException | FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
 		}
 		
 		Scanner inputFile = new Scanner(input);

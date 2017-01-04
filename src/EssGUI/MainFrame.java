@@ -98,7 +98,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		GBC.insets = new Insets(10,0,0,0);
 		GBC.fill = GridBagConstraints.BOTH;
 		JButton[] button = new JButton[4];
-		String [] buttonStr = {"查詢賽程" , "安排賽程" , "調整隊伍","查詢"};
+		String [] buttonStr = {"查詢賽程", "查詢選手" , "安排賽程" , "調整隊伍"};
 		for(int i = 0 ; i < 4 ; i++){
 			button[i] = new JButton(buttonStr[i]);
 			button[i].addActionListener(this);
@@ -182,7 +182,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			title.setText(e.getActionCommand());
 			setOpenPanelButton3();
 			break;
-		case "查詢":
+		case "查詢選手":
 			title.setText(e.getActionCommand());
 			setOpenPanelSearch();
 			break;

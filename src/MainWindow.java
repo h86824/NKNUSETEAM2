@@ -1,4 +1,6 @@
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
@@ -12,7 +14,7 @@ import EssObject.*;
 public class MainWindow {
 
 	public static void main(String[] args) {
-		TreeSet<Country> countrySet = new TreeSet<Country>();
+		/*TreeSet<Country> countrySet = new TreeSet<Country>();
 		countrySet.add(new Country("台灣"));
 		countrySet.add(new Country("史瓦濟蘭"));
 		countrySet.add(new Country("聖多美普林西比"));
@@ -121,7 +123,6 @@ public class MainWindow {
 		EventSchedule ES2 = new EventSchedule("棒球四強" ,"棒球");
 		ES2.addEvent(2016, 12, 14, 8, 0, "棒球場A", "台灣", "布吉納法索");
 		ES2.addEvent(2016, 12, 14, 9, 0, "棒球場A", "聖多美普林西比", "布吉納法索");
-		ES2.addEvent(2016, 12, 14, 10, 0, "棒球場A", "台灣", "聖多美普林西比");
 		ESset.add(ES2);
 		new EventScheduleIO().write(ESset);
 		
@@ -138,11 +139,19 @@ public class MainWindow {
 		for(EventSchedule i : new EventScheduleIO().read()){
 			System.out.println(i.getName());
 		}
+		*/
+		checkPath();
 		
 		MainFrame MF = new MainFrame();
 		//JDialog addEventScheduleDialog = new AddEventScheduleDialog(new DataStore());
 		
 		System.out.println("finish");
 	}
-
+	
+	private static void checkPath(){
+		for(String path : new String[]{ObjectIO.PATH,ObjectIO.PATH+"country", ObjectIO.PATH+"eventSchedule"}){
+			File file = new File(path);
+			file.mkdirs();
+		}
+	}
 }

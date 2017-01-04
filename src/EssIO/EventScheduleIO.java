@@ -26,9 +26,19 @@ public class EventScheduleIO implements ObjectIO<EventSchedule>{
 		BufferedReader input = null;
 		try {
 			input = new BufferedReader(new InputStreamReader(new FileInputStream(filePath+".txt") ,"UTF-8"));
-		} 
+		}
 		catch (UnsupportedEncodingException | FileNotFoundException e) {
-			e.printStackTrace();
+			File file = new File(filePath+".txt");
+			try {
+				file.createNewFile();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			try {
+				input = new BufferedReader(new InputStreamReader(new FileInputStream(filePath+".txt") ,"UTF-8"));
+			} catch (UnsupportedEncodingException | FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
 		}
 		
 		Scanner inputFile = new Scanner(input);

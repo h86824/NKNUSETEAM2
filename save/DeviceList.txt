@@ -1,6 +1,0 @@
-name=球拍
-amount=50
-
-name=籃球
-amount=20
-
