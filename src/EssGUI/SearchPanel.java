@@ -47,12 +47,7 @@ public class SearchPanel extends JPanel implements ActionListener,ListSelectionL
 		jLabel1.setText("請輸入選手名:");
 		this.add(jLabel1,G);
 		
-		
-		
-		
-		
-		
-		
+
 		
 		G.weightx=1;
 		G.weighty=1;
@@ -62,11 +57,11 @@ public class SearchPanel extends JPanel implements ActionListener,ListSelectionL
         G.anchor = GridBagConstraints.EAST;
         this.add(field);
         GBL.setConstraints(field, G);
-        field.setText("選手A");
-        
+               
         
        
 		String[] countryList = new String[dataStore.getCountry().size()];
+		box.addItem("---------------");
 		int count = 0;
 		for(Country i : dataStore.getCountry()){
 			countryList[count] = i.getName();
@@ -93,9 +88,7 @@ public class SearchPanel extends JPanel implements ActionListener,ListSelectionL
 		this.add(jb);
 		GBL.setConstraints(jb, G);
 		
-		 
-		
-		
+
 		
 		
 		G.insets=new Insets(0,10,10,10);
@@ -104,16 +97,12 @@ public class SearchPanel extends JPanel implements ActionListener,ListSelectionL
         G.weightx=1;
         G.weighty=10;
         G.fill = GridBagConstraints.BOTH;
-        G.anchor = GridBagConstraints.NORTHWEST;
+        G.anchor = GridBagConstraints.WEST;
 		this.add(jl,G);
 		
 		
 		G.insets=new Insets(0,10,10,10);
 		G.gridwidth = 6;
-		/*G.gridwidth =2;
-        G.gridheight = 10;
-        G.weightx=1;
-        G.weighty=10;*/
         G.fill = GridBagConstraints.BOTH;
         G.anchor = GridBagConstraints.WEST;
         this.add(jTextArea2,G);
@@ -138,13 +127,29 @@ public class SearchPanel extends JPanel implements ActionListener,ListSelectionL
 		dlm.clear();
 	    jl.setModel(dlm);
 		int count=0;
-		for(Country i : dataStore.getCountry()){
-			if(i.getName().equals(returnStr[0])){
-				for(Team t: i.getTeam()){
-					for(Athlete a: t.getAthlete()){
-						if(a.getName().equals(returnStr[1])){
-							dlm.addElement(a);
-							count++;
+		if(returnStr[0].equals("---------------")){
+			for(Country i : dataStore.getCountry()){
+				
+					for(Team t: i.getTeam()){
+						for(Athlete a: t.getAthlete()){
+							if(a.getName().indexOf(returnStr[1])>0){
+								dlm.addElement(a);
+								count++;
+							}
+						}
+					}
+				
+			}
+		}
+		else{
+			for(Country i : dataStore.getCountry()){
+				if(i.getName().equals(returnStr[0])){
+					for(Team t: i.getTeam()){
+						for(Athlete a: t.getAthlete()){
+							if(a.getName().indexOf(returnStr[1])>0){
+								dlm.addElement(a);
+								count++;
+							}
 						}
 					}
 				}
@@ -167,6 +172,14 @@ public class SearchPanel extends JPanel implements ActionListener,ListSelectionL
 	
 	
 	
+
+
+
+
+
+
+
+
 
 
 
