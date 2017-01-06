@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.Random;
 import java.util.TreeSet;
 
@@ -62,7 +61,6 @@ public class AddEventScheduleDialog extends JDialog implements ActionListener{
 	private JPanel optionPanel;
 	private JButton enterJButton;
 	private JButton cancelJButton;
-	private EventSchedule eventSchedule;
 	private JButton randomJButton;
 	
 	public AddEventScheduleDialog(DataStore dataStore, EventSchedule eventSchedule){
@@ -153,7 +151,7 @@ public class AddEventScheduleDialog extends JDialog implements ActionListener{
 		cancelJButton.addActionListener(this);
 		optionPanel.add(cancelJButton);
 		this.add(optionPanel);
-		setGBC(0);
+		setGBC(10);
 		GBL.setConstraints(optionPanel, GBC);
 		
 		if(eventSchedule != null){
@@ -217,6 +215,8 @@ public class AddEventScheduleDialog extends JDialog implements ActionListener{
 	}	
 	
 	private void setGBC(int num){
+		GBC.ipadx = 0;
+		GBC.ipady = 0;
 		switch(num){
 		case 0:
 			GBC.insets = new Insets(5,5,5,5);
@@ -304,10 +304,10 @@ public class AddEventScheduleDialog extends JDialog implements ActionListener{
 		case 10:
 			GBC.insets = new Insets(5,5,5,5);
 			GBC.gridheight = 1;
-			GBC.gridwidth = 1;
-			GBC.weightx = 0;
+			GBC.gridwidth = 7;
+			GBC.weightx = 1;
 			GBC.weighty = 0;
-			GBC.anchor = GridBagConstraints.EAST;
+			GBC.fill = GridBagConstraints.HORIZONTAL;
 			break;
 		}
 	}

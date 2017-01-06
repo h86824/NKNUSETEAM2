@@ -18,8 +18,6 @@ public class Main {
 		checkPath();
 		
 		MainFrame MF = new MainFrame();
-		
-		System.out.println("finish");
 	}
 	
 	private static void checkPath(){

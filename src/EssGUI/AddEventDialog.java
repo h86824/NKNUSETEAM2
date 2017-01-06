@@ -1,10 +1,8 @@
 package EssGUI;
 
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.TreeSet;
@@ -21,21 +19,21 @@ import EssObject.Event;
 import EssObject.Time;
 
 public class AddEventDialog extends JDialog implements ActionListener{
-	JTextField yearTextFeild = new JTextField("");
-	JTextField monthTextFeild = new JTextField("");
-	JTextField dayTextFeild = new JTextField("");
-	JTextField hourTextFeild = new JTextField("");
-	JTextField minuteTextFeild = new JTextField("");
-	JTextField siteTextFeild = new JTextField("");
-	GridBagConstraints GBC = new GridBagConstraints();
-	GridBagLayout GBL = new GridBagLayout();
-	DefaultComboBoxModel<String> TeamAJComboBoxModel = new DefaultComboBoxModel<String>();
-	JComboBox<String> TeamAJComboBox = new JComboBox<String>(TeamAJComboBoxModel);
-	DefaultComboBoxModel<String> TeamBJComboBoxModel = new DefaultComboBoxModel<String>();
-	JComboBox<String> TeamBJComboBox = new JComboBox<String>(TeamBJComboBoxModel);
-	Event event;
-	TreeSet<String> countrySet;
-	AddEventDialog(Event event, TreeSet<String> countrySet){
+	private JTextField yearTextFeild = new JTextField("");
+	private JTextField monthTextFeild = new JTextField("");
+	private JTextField dayTextFeild = new JTextField("");
+	private JTextField hourTextFeild = new JTextField("");
+	private JTextField minuteTextFeild = new JTextField("");
+	private JTextField siteTextFeild = new JTextField("");
+	private GridBagConstraints GBC = new GridBagConstraints();
+	private GridBagLayout GBL = new GridBagLayout();
+	private DefaultComboBoxModel<String> TeamAJComboBoxModel = new DefaultComboBoxModel<String>();
+	private JComboBox<String> TeamAJComboBox = new JComboBox<String>(TeamAJComboBoxModel);
+	private DefaultComboBoxModel<String> TeamBJComboBoxModel = new DefaultComboBoxModel<String>();
+	private JComboBox<String> TeamBJComboBox = new JComboBox<String>(TeamBJComboBoxModel);
+	private Event event;
+	private TreeSet<String> countrySet;
+	public AddEventDialog(Event event, TreeSet<String> countrySet){
 		this.event = event;
 		this.countrySet = countrySet;
 		java.awt.Dimension scr_size = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
