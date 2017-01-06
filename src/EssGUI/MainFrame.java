@@ -18,7 +18,6 @@ import EssObject.Event;
 public class MainFrame extends JFrame implements ActionListener {
 	private JPanel mainPanel = new JPanel();
 	private JPanel openPanel = new JPanel();
-	private EventSchedule ES;
 	private DataStore dataStore = new DataStore();
 	private JPanel titlePanel = new JPanel();
 	private JLabel title;
@@ -28,8 +27,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	public MainFrame(){	
 		setRandomScheduleBuilder();
 		replanSchedule();
-		//JDialog d = new AthleteInformationDialog(dataStore, "a", "b", new Athlete("選手C", "男", 18, "B", 158, 45, "TW", null, null),false);
-		//this.setBounds(5, 5,800, 600);
+
 		this.setLayout(GBL);
 		/*設定大小*/
 		java.awt.Dimension scr_size = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
@@ -41,9 +39,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		/*視窗設定*/
 		this.setTitle("第二組");
 		title = new JLabel("首頁");
-		title.setFont(new FontUIResource("標楷體",Font.CENTER_BASELINE,scr_size.height / 1080 * 20));
+		title.setFont(new FontUIResource("PMingLiU",Font.CENTER_BASELINE,scr_size.height / 1080 * 20));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setUIFont(new FontUIResource("新細明體",Font.CENTER_BASELINE,scr_size.height / 1080 * 18));
+		setUIFont(new FontUIResource("PMingLiU",Font.CENTER_BASELINE,scr_size.height / 1080 * 18));
 		
 		/*設定按鈕Panel*/
 		setMainPanel();
