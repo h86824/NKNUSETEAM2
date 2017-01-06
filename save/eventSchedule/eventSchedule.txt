@@ -1,4 +1,14 @@
+project=划船
+name=划船八強
+project=划船
+name=划船四強
+project=射擊
+name=射擊八強
+project=柔道
+name=柔道四強
 project=棒球
-name=棒球八強
-project=棒球
-name=棒球四強
+name=棒球決賽
+project=籃球
+name=籃球十強
+project=羽球
+name=羽球八強

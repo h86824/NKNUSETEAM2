@@ -1,0 +1,16 @@
+year=2017
+month=8
+day=25
+hour=8
+minute=30
+site=柔道場A
+teamA=烏克蘭
+teamB=德國
+year=2017
+month=8
+day=25
+hour=10
+minute=0
+site=柔道場A
+teamA=台灣
+teamB=澳大利亞

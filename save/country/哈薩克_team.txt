@@ -1,0 +1,5 @@
+name=射擊
+name=射箭
+name=柔道
+name=籃球
+name=羽球

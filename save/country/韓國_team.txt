@@ -1,8 +1,8 @@
 name=划船
+name=射擊
 name=射箭
 name=排球
 name=柔道
-name=桌球
 name=棒球
 name=籃球
 name=網球

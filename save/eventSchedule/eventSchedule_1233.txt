@@ -1,8 +1,0 @@
-year=11
-month=11
-day=11
-hour=11
-minute=11
-site=11
-teamA=隨機
-teamB=隨機

@@ -69,10 +69,10 @@ public class AddEventDialog extends JDialog implements ActionListener{
 		
 		this.add(yearTextFeild);
 		this.add(yearJLabel);
-		this.add(dayTextFeild);
-		this.add(new JLabel("日"));
 		this.add(monthTextFeild);
 		this.add(new JLabel("月"));
+		this.add(dayTextFeild);
+		this.add(new JLabel("日"));
 		this.add(hourTextFeild);
 		this.add(new JLabel("點"));
 		this.add(minuteTextFeild);

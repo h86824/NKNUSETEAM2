@@ -1,8 +1,0 @@
-year=12
-month=424
-day=454
-hour=24224
-minute=242
-site=24
-teamA=隨機
-teamB=隨機

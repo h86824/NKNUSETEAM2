@@ -1,0 +1,4 @@
+name=射擊
+name=排球
+name=柔道
+name=籃球

@@ -1,0 +1,8 @@
+year=2017
+month=8
+day=30
+hour=14
+minute=0
+site=棒球場A
+teamA=日本
+teamB=台灣

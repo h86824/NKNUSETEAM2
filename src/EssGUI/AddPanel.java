@@ -133,7 +133,7 @@ public class AddPanel extends JPanel implements ActionListener {
 		/*國家清單*/
 		countryJList = new JList<String>(countryList);
 		countryJList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		countryJList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		countryJList.setLayoutOrientation(JList.VERTICAL);
 		JScrollPane countryJScrollPane = new JScrollPane(countryJList);
 		this.add(countryJScrollPane);
 		gridBagLayout.setConstraints(countryJScrollPane, gridBagConstraints);
@@ -141,7 +141,7 @@ public class AddPanel extends JPanel implements ActionListener {
 		/*隊伍清單*/
 		teamJList = new JList<String>();
 		teamJList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		teamJList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		teamJList.setLayoutOrientation(JList.VERTICAL);
 		JScrollPane teamJScrollPane = new JScrollPane(teamJList);
 		this.add(teamJScrollPane);
 		gridBagLayout.setConstraints(teamJScrollPane, gridBagConstraints);
@@ -149,7 +149,7 @@ public class AddPanel extends JPanel implements ActionListener {
 		/*選手清單*/
 		athleteJList = new JList<String>();
 		athleteJList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		athleteJList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		athleteJList.setLayoutOrientation(JList.VERTICAL);
 		JScrollPane athleteJScrollPane = new JScrollPane(athleteJList);
 		this.add(athleteJScrollPane);
 		gridBagConstraints.gridwidth = 3;
@@ -279,15 +279,15 @@ public class AddPanel extends JPanel implements ActionListener {
 					dataStore.deleteCountry(selectCountry);
 					
 					String[] tempList = new String[dataStore.getCountry().size()];
+					countryJList.setListData(new String[0]);
 					int counttemp = 0;
 					for(Country i : dataStore.getCountry()){
 						tempList[counttemp++] = i.getName();
 						countryJList.setListData(tempList);
 						cleenTeamJList();
 						cleenAthleteJList();
-						updateUI();
 					}
-					
+					updateUI();
 				}
 			}
 			else{

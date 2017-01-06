@@ -1,0 +1,4 @@
+name=划船
+name=柔道
+name=網球
+name=羽球
