@@ -23,8 +23,9 @@ public class MainFrame extends JFrame implements ActionListener {
 	private JLabel title;
 	private GridBagConstraints GBC = new GridBagConstraints();
 	private GridBagLayout GBL = new GridBagLayout();
-	
-	public MainFrame(){	
+	private String [] buttonStr = {"查詢賽程", "查詢選手" , "安排賽程" , "調整隊伍"};
+	public MainFrame(String[] buttonStr){
+		this.buttonStr = buttonStr;
 		setRandomScheduleBuilder();
 		replanSchedule();
 
@@ -95,9 +96,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		GBC.weighty = 1;
 		GBC.insets = new Insets(10,0,0,0);
 		GBC.fill = GridBagConstraints.BOTH;
-		JButton[] button = new JButton[4];
-		String [] buttonStr = {"查詢賽程", "查詢選手" , "安排賽程" , "調整隊伍"};
-		for(int i = 0 ; i < 4 ; i++){
+		JButton[] button = new JButton[buttonStr.length];
+		
+		for(int i = 0 ; i < buttonStr.length ; i++){
 			button[i] = new JButton(buttonStr[i]);
 			button[i].addActionListener(this);
 			mainPanel.add(button[i]);

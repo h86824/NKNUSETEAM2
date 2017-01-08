@@ -389,7 +389,8 @@ public class AddEventScheduleDialog extends JDialog implements ActionListener{
 				new AddEventDialog(inputEvent, stringSet1);
 				if(inputEvent.getTime() != null && inputEvent.getSite() != null && inputEvent.getTeamA() != null && inputEvent.getTeamB() != null){
 					System.out.println(inputEvent);
-					eventSet.add(inputEvent);
+					if(eventSet.add(inputEvent) == false)
+						JOptionPane.showMessageDialog(null, "已有重複選項，新增失敗");
 					updateEventPanel();
 				}
 				break;

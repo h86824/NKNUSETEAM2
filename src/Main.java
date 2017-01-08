@@ -17,7 +17,7 @@ public class Main {
 		
 		checkPath();
 		
-		MainFrame MF = new MainFrame();
+		MainFrame MF = new MainFrame(new String[]{"查詢賽程", "查詢選手" , "安排賽程" , "調整隊伍"});
 	}
 	
 	private static void checkPath(){
