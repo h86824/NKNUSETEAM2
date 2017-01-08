@@ -56,6 +56,11 @@ public class Event implements Comparable<Event>{
 	}
 	
 	@Override
+	public int hashCode(){
+		return 1;
+	}
+	
+	@Override
 	public boolean equals(Object o){
 		if(this.getClass() != o.getClass())return false;
 		Event event = (Event)o;
@@ -64,7 +69,7 @@ public class Event implements Comparable<Event>{
 		else if(this.time.getDay() != event.time.getDay())return false;
 		else if(this.time.getHour() != event.time.getHour())return false;
 		else if(this.time.getMinute() != event.time.getMinute())return false;
-		else if(this.site.equals(event.site) )return false;
+		else if(!this.site.equals(event.site) )return false;
 		else if(this.teamA.equals(event.teamA)&&this.teamB.equals(event.teamB))return false;
 		else if(this.teamA.equals(event.teamB)&&this.teamB.equals(event.teamA))return false;
 		else return true;
@@ -80,14 +85,16 @@ public class Event implements Comparable<Event>{
 			return this.time.getDay() - o.time.getDay();
 		else if(this.time.getHour() != o.time.getHour())
 			return this.time.getHour() - o.time.getHour();
-		else
+		else if(this.time.getMinute() != o.time.getMinute())
 			return this.time.getMinute() - o.time.getMinute();
+		else 
+			return this.getSite().compareTo(o.getSite());
 	}
 	
 	@Override
 	public String toString(){
-		return String.format("%d/%d/%d %02d:%02d %s vs %s"
+		return String.format("%d/%d/%d %02d:%02d %s vs %s %s"
 				, time.getYear(), time.getMonth(), time.getDay(), time.getHour(), time.getMinute()
-				,teamA ,teamB);
+				,teamA ,teamB, site);
 	}
 }
