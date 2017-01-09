@@ -433,7 +433,7 @@ public class AddEventScheduleDialog extends JDialog implements ActionListener{
 		for(Event i : eventSet){
 			saveEventSchedule.addEvent(i);
 		}
-		
+		randomChoose();
 		dataStore.addEventSchedule(saveEventSchedule);
 		this.dispose();
 	}
